@@ -13,5 +13,16 @@ end Main;
 architecture Behavioral of Main is
 --signaux
 begin
--- tout
+	MainControl:Process(i_clk) is -- processus synchrone
+		begin
+			if rising_edge(i_clk) then -- sur front montant d'horloge
+				if i_reset = '0' then -- reset synchrone =» remise de tout les registres à zéro
+					if i_run = '1' then
+					-- here when it runs
+					end if; 
+				else -- reset =» remise a zéro de tout les registres
+				--reset stages
+				end if;
+			end if;
+		end process;
 end Behavioral;
