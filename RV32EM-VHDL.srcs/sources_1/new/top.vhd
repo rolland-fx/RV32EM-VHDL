@@ -78,13 +78,23 @@ architecture Behavioral of Main is
 
 	component instruction_fetch is
 		Port (
-			PC_in : in std_logic_vector(31 downto 0);
-			RI_in : in std_logic_vector(31 downto 0);
-
 			PC_out : out std_logic_vector(31 downto 0);
 			RI_out : out std_logic_vector(31 downto 0)
 		);
 	end component instruction_fetch;
+
+	component instruction_decode is
+		Port (
+			PC_in : in std_logic_vector(31 downto 0);
+			RI_in : in std_logic_vector(31 downto 0);
+
+			PC_out  : out std_logic_vector(31 downto 0);
+			RD1_out : out std_logic_vector(31 downto 0);
+			RD2_out : out std_logic_vector(31 downto 0);
+			IMM_out : out std_logic_vector(31 downto 0);
+			RI_out  : out std_logic_vector(31 downto 0)
+		);
+	end component instruction_decode;
 
 begin
 	MainControl : Process(i_clk) is --synchron process
@@ -123,10 +133,19 @@ begin
 
 	IF_stage : instruction_fetch
 		port map (
-			PC_in => s_i_IF_PC,
-			RI_in => s_i_IF_RI,
+			PC_out => s_i_IF_PC,
+			RI_out => s_i_IF_RI
+		);
 
-			PC_out => s_o_IF_PC,
-			RI_out => s_o_IF_RI
+	ID_stage : instruction_decode
+		port map (
+			PC_in => s_o_IF_PC,
+			RI_in => s_o_IF_RI,
+
+			PC_out  => s_i_ID_PC,
+			RD1_out => s_i_ID_RD1,
+			RD2_out => s_i_ID_RD2,
+			IMM_out => s_i_ID_IMM,
+			RI_out  => s_i_ID_RI
 		);
 end Behavioral;
