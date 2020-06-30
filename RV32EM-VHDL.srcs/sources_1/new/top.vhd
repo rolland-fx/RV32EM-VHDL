@@ -110,6 +110,18 @@ architecture Behavioral of Main is
 		);
 	end component execute;
 
+	component memory_access is
+		port (
+			ALU_OUT_in : in std_logic_vector(31 downto 0);
+			ALU_IN2_in : in std_logic_vector(31 downto 0);
+			RI_in      : in std_logic_vector(31 downto 0);
+
+			DATA_out : out std_logic_vector(31 downto 0);
+			ADDR_out : out std_logic_vector(31 downto 0);
+			RI_out   : out std_logic_vector(31 downto 0)
+		);
+	end component memory_access;
+
 begin
 	MainControl : Process(i_clk) is --synchron process
 	begin
@@ -175,4 +187,15 @@ begin
 			ALU_IN2_out => s_i_EM_ALU_IN2,
 			RI_out      => s_i_EM_RI
 		);
+
+	MEM_stage : memory_access
+	port map (
+		ALU_OUT_in => s_o_EM_ALU_OUT,
+		ALU_IN2_in => s_o_EM_ALU_IN2,
+		RI_in => s_o_EM_RI,
+
+		DATA_out => s_i_MEM_MEM_DATA,
+		ADDR_out => s_i_MEM_MEM_ADDR,
+		RI_out => s_i_MEM_RI
+	);
 end Behavioral;
