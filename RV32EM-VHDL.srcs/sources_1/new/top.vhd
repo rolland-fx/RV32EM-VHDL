@@ -96,6 +96,20 @@ architecture Behavioral of Main is
 		);
 	end component instruction_decode;
 
+	component execute is
+		port (
+			PC_out : in std_logic_vector(31 downto 0);
+			RD1_in : in std_logic_vector(31 downto 0);
+			RD2_in : in std_logic_vector(31 downto 0);
+			IMM_in : in std_logic_vector(31 downto 0);
+			RI_in  : in std_logic_vector(31 downto 0);
+
+			ALU_OUT_out : out std_logic_vector(31 downto 0);
+			ALU_IN2_out : out std_logic_vector(31 downto 0);
+			RI_out      : out std_logic_vector(31 downto 0)
+		);
+	end component execute;
+
 begin
 	MainControl : Process(i_clk) is --synchron process
 	begin
@@ -147,5 +161,18 @@ begin
 			RD2_out => s_i_ID_RD2,
 			IMM_out => s_i_ID_IMM,
 			RI_out  => s_i_ID_RI
+		);
+
+	EM_stage : execute
+		port map (
+			PC_out => s_o_ID_PC,
+			RD1_in => s_o_ID_RD1,
+			RD2_in => s_o_ID_RD2,
+			IMM_in => s_o_ID_IMM,
+			RI_in  => s_o_ID_RI,
+
+			ALU_OUT_out => s_i_EM_ALU_OUT,
+			ALU_IN2_out => s_i_EM_ALU_IN2,
+			RI_out      => s_i_EM_RI
 		);
 end Behavioral;
