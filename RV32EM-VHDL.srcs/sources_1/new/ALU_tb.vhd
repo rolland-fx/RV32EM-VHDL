@@ -6,7 +6,7 @@
 -- Author      : Alexandre Viau <alexandre.viau.2@ens.etsmtl.ca>
 -- Company     : École de technologie Superieur
 -- Created     : Fri Jul  3 21:46:14 2020
--- Last update : Fri Jul  3 22:56:45 2020
+-- Last update : Sat Jul  4 09:55:47 2020
 -- Platform    : N/A
 -- Standard    : <VHDL-2008 | VHDL-2002 | VHDL-1993 | VHDL-1987>
 --------------------------------------------------------------------------------
@@ -38,7 +38,7 @@ architecture testbench of ALU_tb is
 
 
 	-- Testbench DUT ports
-	signal control : std_logic_vector(4 downto 0);
+	signal control : std_logic_vector(5 downto 0);
 	signal opA     : std_logic_vector(31 downto 0);
 	signal opB     : std_logic_vector(31 downto 0);
 	signal ALU_out : std_logic_vector(31 downto 0);
@@ -58,13 +58,13 @@ begin
 	begin
 		test_runner_setup(runner, runner_cfg);
 
-		control <= "00001"; -- ADD
+		control <= "000001"; -- ADD
 		opA <= std_logic_vector(to_signed(-10, opA'length));
 		opB <= std_logic_vector(to_signed(5, opB'length));
 		wait for 10 ns;
 		check_equal(ALU_out, std_logic_vector(to_signed(-5, ALU_out'length)), "ADD -10 + 5 = -5");
 
-		control <= "00000"; -- ADDI
+		control <= "000000"; -- ADDI
 		opA <= std_logic_vector(to_signed(5, opA'length));
 		--opB <= std_logic_vector(to_signed(-20, opB'length));
 		opB(11 downto 0) <= std_logic_vector(to_signed(-20, 12));
@@ -72,7 +72,7 @@ begin
 		wait for 10 ns;
 		check_equal(ALU_out, std_logic_vector(to_signed(-15, ALU_out'length)), "ADDI 5 + -20 = -15");
 
-		control <= "00011"; -- SUB
+		control <= "000101"; -- SUB
 		opA <= std_logic_vector(to_signed(-5, opA'length));
 		opB <= std_logic_vector(to_signed(-20, opB'length));
 		wait for 10 ns;
