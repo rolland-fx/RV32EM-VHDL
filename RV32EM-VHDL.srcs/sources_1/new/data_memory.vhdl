@@ -20,7 +20,7 @@ end data_memory;
 
 architecture Behavioral of data_memory is
 	type ram_type is array(memory_size-1 downto 0) of std_logic_vector(data_size-1 downto 0);
-	variable data_ram : ram_type;
+	signal data_ram : ram_type;
 
 begin
 	process(clk)
@@ -28,7 +28,7 @@ begin
 		if rising_edge(clk) then
 			if (MemRead = '1') then
 				if (MemWrite = '1') then
-					data_ram(to_integer(unsigned(address))) := write_data;		
+					data_ram(to_integer(unsigned(address))) <= write_data;		
 				else
 					read_data <= data_ram(to_integer(unsigned(address)));
 				end if;
