@@ -3,7 +3,7 @@
 <!--                                                         -->
 <!-- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.   -->
 
-<Project Version="7" Minor="39" Path="C:/Users/Alexandre/Documents/GitHub/RV32EM-VHDL/RV32EM-VHDL.xpr">
+<Project Version="7" Minor="39" Path="C:/Users/alexa/Documents/Vivado/RV32EM-VHDL/RV32EM-VHDL.xpr">
   <DefaultLaunch Dir="$PRUNDIR"/>
   <Configuration>
     <Option Name="Id" Val="299e3dd921ad4d6b9445da91903c475b"/>
@@ -63,6 +63,13 @@
       <Filter Type="Srcs"/>
       <File Path="$PSRCDIR/sources_1/new/ALU.vhd">
         <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/new/ALU_control.vhd">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
