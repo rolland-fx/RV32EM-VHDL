@@ -32,20 +32,22 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 
 entity memory_access is
-  Port (
-  		ALU_OUT_in : in std_logic_vector(31 downto 0);
-		ALU_IN2_in : in std_logic_vector(31 downto 0);
-		RI_in      : in std_logic_vector(31 downto 0);
+	Port (
+		ALU_OUT_in       : in std_logic_vector(31 downto 0);
+		RD2_in           : in std_logic_vector(31 downto 0);
+		instr_11_to_7_in : in std_logic_vector(4 downto 0);
 
 		DATA_out : out std_logic_vector(31 downto 0);
 		ADDR_out : out std_logic_vector(31 downto 0);
-		RI_out : out std_logic_vector(31 downto 0)
-   );
+		RI_out   : out std_logic_vector(31 downto 0)
+	);
 end memory_access;
 
 architecture Behavioral of memory_access is
 
 begin
+
+
 
 
 end Behavioral;

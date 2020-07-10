@@ -6,7 +6,7 @@
 -- Author      : Alexandre Viau <alexandre.viau.2@ens.etsmtl.ca>
 -- Company     : École de technologie Superieur
 -- Created     : Fri Jul  3 19:04:26 2020
--- Last update : Fri Jul 10 10:15:55 2020
+-- Last update : Fri Jul 10 10:20:26 2020
 -- Platform    : N/A
 -- Standard    : <VHDL-2008 | VHDL-2002 | VHDL-1993 | VHDL-1987>
 --------------------------------------------------------------------------------

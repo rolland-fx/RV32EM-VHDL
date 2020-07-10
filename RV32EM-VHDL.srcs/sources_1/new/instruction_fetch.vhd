@@ -6,7 +6,7 @@
 -- Author      : User Name <user.email@user.company.com>
 -- Company     : User Company Name
 -- Created     : Tue Jun 30 17:59:58 2020
--- Last update : Tue Jun 30 18:22:30 2020
+-- Last update : Fri Jul 10 10:26:58 2020
 -- Platform    : Default Part Number
 -- Standard    : <VHDL-2008 | VHDL-2002 | VHDL-1993 | VHDL-1987>
 --------------------------------------------------------------------------------
