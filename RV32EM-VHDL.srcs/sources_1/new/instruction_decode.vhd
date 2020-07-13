@@ -6,7 +6,7 @@
 -- Author      : User Name <user.email@user.company.com>
 -- Company     : User Company Name
 -- Created     : Tue Jun 30 18:14:47 2020
--- Last update : Tue Jun 30 18:25:11 2020
+-- Last update : Fri Jul 10 11:18:30 2020
 -- Platform    : Default Part Number
 -- Standard    : <VHDL-2008 | VHDL-2002 | VHDL-1993 | VHDL-1987>
 --------------------------------------------------------------------------------
@@ -38,11 +38,12 @@ entity instruction_decode is
 		PC_in : in std_logic_vector(31 downto 0);
 		RI_in : in std_logic_vector(31 downto 0);
 
-		PC_out  : out std_logic_vector(31 downto 0);
-		RD1_out : out std_logic_vector(31 downto 0);
-		RD2_out : out std_logic_vector(31 downto 0);
-		IMM_out : out std_logic_vector(31 downto 0);
-		RI_out  : out std_logic_vector(31 downto 0)
+		PC_out                     : out std_logic_vector(31 downto 0);
+		RD1_out                    : out std_logic_vector(31 downto 0);
+		RD2_out                    : out std_logic_vector(31 downto 0);
+		IMM_out                    : out std_logic_vector(31 downto 0);
+		instr_30_25_14_to_12_3_out : out std_logic_vector(5 downto 0);
+		s_i_ID_instr_11_to_7_out   : out std_logic_vector(4 downto 0)
 	);
 end instruction_decode;
 

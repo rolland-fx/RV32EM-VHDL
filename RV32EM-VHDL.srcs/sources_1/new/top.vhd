@@ -1,6 +1,9 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
+library work;
+use work.part.all;
+
 entity Main is
 	Port (
 		i_clk   : in STD_LOGIC;
@@ -26,103 +29,62 @@ architecture Behavioral of Main is
 
 	--------ID/EX STAGE ----------
 	-- ENTRY of ID/EX pipeline
-	signal s_i_ID_PC  : std_logic_vector(31 downto 0);
-	signal s_i_ID_RD1 : std_logic_vector(31 downto 0);
-	signal s_i_ID_RD2 : std_logic_vector(31 downto 0);
-	signal s_i_ID_IMM : std_logic_vector(31 downto 0);
-	signal s_i_ID_RI  : std_logic_vector(31 downto 0);
+	signal s_i_ID_PC                     : std_logic_vector(31 downto 0);
+	signal s_i_ID_RD1                    : std_logic_vector(31 downto 0);
+	signal s_i_ID_RD2                    : std_logic_vector(31 downto 0);
+	signal s_i_ID_IMM                    : std_logic_vector(31 downto 0);
+	signal s_i_ID_instr_30_25_14_to_12_3 : std_logic_vector(5 downto 0);
+	signal s_i_ID_instr_11_to_7          : std_logic_vector(4 downto 0);
 	-- CONTROL IN of ID/EX pipeline
 	signal s_i_ID_WB : std_logic_vector(1 downto 0);
 	signal s_i_ID_M  : std_logic_vector(4 downto 0);
 	signal s_i_ID_EX : std_logic_vector(5 downto 0);
 	-- OUPUT of ID/EX pipeline
-	signal s_o_ID_PC  : std_logic_vector(31 downto 0);
-	signal s_o_ID_RD1 : std_logic_vector(31 downto 0);
-	signal s_o_ID_RD2 : std_logic_vector(31 downto 0);
-	signal s_o_ID_IMM : std_logic_vector(31 downto 0);
-	signal s_o_ID_RI  : std_logic_vector(31 downto 0);
+	signal s_o_ID_PC                     : std_logic_vector(31 downto 0);
+	signal s_o_ID_RD1                    : std_logic_vector(31 downto 0);
+	signal s_o_ID_RD2                    : std_logic_vector(31 downto 0);
+	signal s_o_ID_IMM                    : std_logic_vector(31 downto 0);
+	signal s_o_ID_instr_30_25_14_to_12_3 : std_logic_vector(5 downto 0);
+	signal s_o_ID_instr_11_to_7          : std_logic_vector(4 downto 0);
 	-- CONTROL OUT of ID/EX pipeline
 	signal s_o_ID_WB : std_logic_vector(1 downto 0);
 	signal s_o_ID_M  : std_logic_vector(4 downto 0);
 	signal s_o_ID_EX : std_logic_vector(5 downto 0);
 
-	--------EM/MEM STAGE ----------
+	--------EX/MEM STAGE ----------
 	-- ENTRY of ID/EX pipeline
-	signal s_i_EM_ALU_OUT : std_logic_vector(31 downto 0);
-	signal s_i_EM_ALU_IN2 : std_logic_vector(31 downto 0);
-	signal s_i_EM_RI      : std_logic_vector(31 downto 0);
+	signal s_i_EX_ALU_OUT       : std_logic_vector(31 downto 0);
+	signal s_i_EX_RD2           : std_logic_vector(31 downto 0);
+	signal s_i_EX_instr_11_to_7 : std_logic_vector(4 downto 0);
 	-- CONTROL IN of ID/EX pipeline
-	signal s_i_EM_WB : std_logic_vector(1 downto 0);
-	signal s_i_EM_M  : std_logic_vector(4 downto 0);
+	signal s_i_EX_WB : std_logic_vector(1 downto 0);
+	signal s_i_EX_M  : std_logic_vector(4 downto 0);
 	-- OUPUT of ID/EX pipeline
-	signal s_o_EM_ALU_OUT : std_logic_vector(31 downto 0);
-	signal s_o_EM_ALU_IN2 : std_logic_vector(31 downto 0);
-	signal s_o_EM_RI      : std_logic_vector(31 downto 0);
+	signal s_o_EX_ALU_OUT       : std_logic_vector(31 downto 0);
+	signal s_o_EX_RD2           : std_logic_vector(31 downto 0);
+	signal s_o_EX_instr_11_to_7 : std_logic_vector(4 downto 0);
 	-- CONTROL OUT of ID/EX pipeline
-	signal s_o_EM_WB : std_logic_vector(1 downto 0);
-	signal s_o_EM_M  : std_logic_vector(4 downto 0);
+	signal s_o_EX_WB : std_logic_vector(1 downto 0);
+	signal s_o_EX_M  : std_logic_vector(4 downto 0);
 
 	--------MEM/WB STAGE ----------
 	-- ENTRY of MEM/WB pipeline
-	signal s_i_MEM_MEM_DATA : std_logic_vector(31 downto 0);
-	signal s_i_MEM_MEM_ADDR : std_logic_vector(31 downto 0);
-	signal s_i_MEM_RI       : std_logic_vector(31 downto 0);
+	signal s_i_MEM_DATA : std_logic_vector(31 downto 0);
+	signal s_i_MEM_ADDR : std_logic_vector(31 downto 0);
+	signal s_i_MEM_RI   : std_logic_vector(31 downto 0);
 	-- CONTROL IN of MEM/WB pipeline
 	signal s_i_MEM_WB : std_logic_vector(1 downto 0);
 	-- OUPUT of MEM/WB pipeline
-	signal s_o_MEM_MEM_DATA : std_logic_vector(31 downto 0);
-	signal s_o_MEM_MEM_ADDR : std_logic_vector(31 downto 0);
-	signal s_o_MEM_RI       : std_logic_vector(31 downto 0);
+	signal s_o_MEM_DATA : std_logic_vector(31 downto 0);
+	signal s_o_MEM_ADDR : std_logic_vector(31 downto 0);
+	signal s_o_MEM_RI   : std_logic_vector(31 downto 0);
 	-- CONTROL OUT of MEM/WB pipeline
 	signal s_o_MEM_WB : std_logic_vector(1 downto 0);
 
-	component instruction_fetch is
-		Port (
-			PC_out : out std_logic_vector(31 downto 0);
-			RI_out : out std_logic_vector(31 downto 0)
-		);
-	end component instruction_fetch;
-
-	component instruction_decode is
-		Port (
-			PC_in : in std_logic_vector(31 downto 0);
-			RI_in : in std_logic_vector(31 downto 0);
-
-			PC_out  : out std_logic_vector(31 downto 0);
-			RD1_out : out std_logic_vector(31 downto 0);
-			RD2_out : out std_logic_vector(31 downto 0);
-			IMM_out : out std_logic_vector(31 downto 0);
-			RI_out  : out std_logic_vector(31 downto 0)
-		);
-	end component instruction_decode;
-
-	component execute is
-		port (
-			PC_out : in std_logic_vector(31 downto 0);
-			RD1_in : in std_logic_vector(31 downto 0);
-			RD2_in : in std_logic_vector(31 downto 0);
-			IMM_in : in std_logic_vector(31 downto 0);
-			RI_in  : in std_logic_vector(31 downto 0);
-
-			ALU_OUT_out : out std_logic_vector(31 downto 0);
-			ALU_IN2_out : out std_logic_vector(31 downto 0);
-			RI_out      : out std_logic_vector(31 downto 0)
-		);
-	end component execute;
-
-	component memory_access is
-		port (
-			ALU_OUT_in : in std_logic_vector(31 downto 0);
-			ALU_IN2_in : in std_logic_vector(31 downto 0);
-			RI_in      : in std_logic_vector(31 downto 0);
-
-			DATA_out : out std_logic_vector(31 downto 0);
-			ADDR_out : out std_logic_vector(31 downto 0);
-			RI_out   : out std_logic_vector(31 downto 0)
-		);
-	end component memory_access;
-
 begin
+
+	s_i_EX_instr_11_to_7 <= s_o_ID_instr_11_to_7;
+
 	MainControl : Process(i_clk) is --synchron process
 	begin
 		if rising_edge(i_clk) then  -- on rising clock edge
@@ -132,27 +94,51 @@ begin
 					s_o_IF_PC <= s_i_IF_PC;
 					s_o_IF_RI <= s_i_IF_RI;
 					--ID/EX
-					s_o_ID_PC  <= s_i_ID_PC;
-					s_o_ID_RD1 <= s_i_ID_RD1;
-					s_o_ID_RD2 <= s_i_ID_RD2;
-					s_o_ID_IMM <= s_i_ID_IMM;
-					s_o_ID_RI  <= s_i_ID_RI;
-					s_o_ID_WB  <= s_i_ID_WB;
-					s_o_ID_M   <= s_i_ID_M;
-					s_o_ID_EX  <= s_i_ID_EX;
+					s_o_ID_PC                     <= s_i_ID_PC;
+					s_o_ID_RD1                    <= s_i_ID_RD1;
+					s_o_ID_RD2                    <= s_i_ID_RD2;
+					s_o_ID_IMM                    <= s_i_ID_IMM;
+					s_o_ID_instr_30_25_14_to_12_3 <= s_i_ID_instr_30_25_14_to_12_3;
+					s_o_ID_instr_11_to_7          <= s_i_ID_instr_11_to_7;
+					s_o_ID_WB                     <= s_i_ID_WB;
+					s_o_ID_M                      <= s_i_ID_M;
+					s_o_ID_EX                     <= s_i_ID_EX;
 					-- EX/MEM
-					s_o_EM_ALU_OUT <= s_i_EM_ALU_OUT;
-					s_o_EM_ALU_IN2 <= s_i_EM_ALU_IN2;
-					s_o_EM_RI      <= s_i_EM_RI;
-					s_o_EM_WB      <= s_i_EM_WB;
-					s_o_EM_M       <= s_i_EM_M;
+					s_o_EX_ALU_OUT       <= s_i_EX_ALU_OUT;
+					s_o_EX_RD2           <= s_i_EX_RD2;
+					s_o_EX_instr_11_to_7 <= s_i_EX_instr_11_to_7;
+					s_o_EX_WB            <= s_i_EX_WB;
+					s_o_EX_M             <= s_i_EX_M;
 					-- MEM/WB
-					s_o_MEM_MEM_DATA <= s_i_MEM_MEM_DATA;
-					s_o_MEM_MEM_ADDR <= s_i_MEM_MEM_ADDR;
-					s_o_MEM_RI       <= s_i_MEM_RI;
-					s_o_MEM_WB       <= s_i_MEM_WB;
+					s_o_MEM_DATA <= s_i_MEM_DATA;
+					s_o_MEM_ADDR <= s_i_MEM_ADDR;
+					s_o_MEM_RI   <= s_i_MEM_RI;
+					s_o_MEM_WB   <= s_i_MEM_WB;
 				end if;
 			else -- reset =» all level are force to Zero
+				s_o_IF_PC <= (others => '0');
+				s_o_IF_RI <= (others => '0');
+				--ID/EX
+				s_o_ID_PC                     <= (others => '0');
+				s_o_ID_RD1                    <= (others => '0');
+				s_o_ID_RD2                    <= (others => '0');
+				s_o_ID_IMM                    <= (others => '0');
+				s_o_ID_instr_30_25_14_to_12_3 <= (others => '0');
+				s_o_ID_instr_11_to_7          <= (others => '0');
+				s_o_ID_WB                     <= (others => '0');
+				s_o_ID_M                      <= (others => '0');
+				s_o_ID_EX                     <= (others => '0');
+				-- EX/MEM
+				s_o_EX_ALU_OUT       <= (others => '0');
+				s_o_EX_RD2           <= (others => '0');
+				s_o_EX_instr_11_to_7 <= (others => '0');
+				s_o_EX_WB            <= (others => '0');
+				s_o_EX_M             <= (others => '0');
+				-- MEM/WB
+				s_o_MEM_DATA <= (others => '0');
+				s_o_MEM_ADDR <= (others => '0');
+				s_o_MEM_RI   <= (others => '0');
+				s_o_MEM_WB   <= (others => '0');
 			end if;
 		end if;
 	end process;
@@ -168,34 +154,35 @@ begin
 			PC_in => s_o_IF_PC,
 			RI_in => s_o_IF_RI,
 
-			PC_out  => s_i_ID_PC,
-			RD1_out => s_i_ID_RD1,
-			RD2_out => s_i_ID_RD2,
-			IMM_out => s_i_ID_IMM,
-			RI_out  => s_i_ID_RI
+			PC_out                     => s_i_ID_PC,
+			RD1_out                    => s_i_ID_RD1,
+			RD2_out                    => s_i_ID_RD2,
+			IMM_out                    => s_i_ID_IMM,
+			instr_30_25_14_to_12_3_out => s_i_ID_instr_30_25_14_to_12_3,
+			s_i_ID_instr_11_to_7_out   => s_i_ID_instr_11_to_7
 		);
 
-	EM_stage : execute
+	EX_stage : execute
 		port map (
-			PC_out => s_o_ID_PC,
-			RD1_in => s_o_ID_RD1,
-			RD2_in => s_o_ID_RD2,
-			IMM_in => s_o_ID_IMM,
-			RI_in  => s_o_ID_RI,
+			EX                        => s_o_ID_EX,
+			PC_in                     => s_o_ID_PC,
+			RD1_in                    => s_o_ID_RD1,
+			RD2_in                    => s_o_ID_RD2,
+			IMM_in                    => s_o_ID_IMM,
+			instr_30_25_14_to_12_3_in => s_o_ID_instr_30_25_14_to_12_3,
 
-			ALU_OUT_out => s_i_EM_ALU_OUT,
-			ALU_IN2_out => s_i_EM_ALU_IN2,
-			RI_out      => s_i_EM_RI
+			ALU_OUT_out => s_i_EX_ALU_OUT,
+			RD2_out     => s_i_EX_RD2
 		);
 
 	MEM_stage : memory_access
-	port map (
-		ALU_OUT_in => s_o_EM_ALU_OUT,
-		ALU_IN2_in => s_o_EM_ALU_IN2,
-		RI_in => s_o_EM_RI,
+		port map (
+			ALU_OUT_in       => s_o_EX_ALU_OUT,
+			RD2_in       => s_o_EX_RD2,
+			instr_11_to_7_in => s_o_EX_instr_11_to_7,
 
-		DATA_out => s_i_MEM_MEM_DATA,
-		ADDR_out => s_i_MEM_MEM_ADDR,
-		RI_out => s_i_MEM_RI
-	);
+			DATA_out => s_i_MEM_DATA,
+			ADDR_out => s_i_MEM_ADDR,
+			RI_out   => s_i_MEM_RI
+		);
 end Behavioral;
