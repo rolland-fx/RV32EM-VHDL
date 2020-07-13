@@ -4,9 +4,9 @@ use IEEE.NUMERIC_STD.ALL;
 
 entity data_memory is
 	generic (
-		address_size : integer;
-		data_size    : integer;
-		memory_size  : integer
+		address_size : integer := 12;
+		data_size    : integer := 32;
+		memory_size  : integer := 4096
 	);
 	Port (
 		clk          : in  std_logic;
