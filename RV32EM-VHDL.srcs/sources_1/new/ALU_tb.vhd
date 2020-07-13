@@ -6,7 +6,7 @@
 -- Author      : Alexandre Viau <alexandre.viau.2@ens.etsmtl.ca>
 -- Company     : École de technologie Superieur
 -- Created     : Fri Jul  3 21:46:14 2020
--- Last update : Sat Jul  4 11:55:47 2020
+-- Last update : Mon Jul 13 17:47:51 2020
 -- Platform    : N/A
 -- Standard    : <VHDL-2008 | VHDL-2002 | VHDL-1993 | VHDL-1987>
 --------------------------------------------------------------------------------
@@ -38,7 +38,7 @@ architecture testbench of ALU_tb is
 
 
 	-- Testbench DUT ports
-	signal control : std_logic_vector(5 downto 0);
+	signal ALU_control : std_logic_vector(4 downto 0);
 	signal opA     : std_logic_vector(31 downto 0);
 	signal opB     : std_logic_vector(31 downto 0);
 	signal ALU_out : std_logic_vector(31 downto 0);
@@ -58,154 +58,89 @@ begin
 	begin
 		test_runner_setup(runner, runner_cfg);
 
-		control <= "000001"; -- ADD
+		ALU_control <= "00001"; -- ADD
 		opA <= std_logic_vector(to_signed(-10, opA'length));
 		opB <= std_logic_vector(to_signed(5, opB'length));
 		wait for 10 ns;
 		check_equal(ALU_out, std_logic_vector(to_signed(-5, ALU_out'length)), "ADD -10 + 5 = -5");
 
-		control <= "000000"; -- ADDI
-		opA <= std_logic_vector(to_signed(5, opA'length));
-		--opB <= std_logic_vector(to_signed(-20, opB'length));
-		opB(11 downto 0) <= std_logic_vector(to_signed(-20, 12));
-		opB(31 downto 12) <= (others => '0');
-		wait for 10 ns;
-		check_equal(ALU_out, std_logic_vector(to_signed(-15, ALU_out'length)), "ADDI 5 + -20 = -15");
-
-		control <= "000101"; -- SUB
+		ALU_control <= "00010"; -- SUB
 		opA <= std_logic_vector(to_signed(-5, opA'length));
 		opB <= std_logic_vector(to_signed(-20, opB'length));
 		wait for 10 ns;
 		check_equal(ALU_out, std_logic_vector(to_signed(15, ALU_out'length)), "SUB -5 - -20 = 15");
 
-		control <= "001001"; -- SLL
-		opA <= x"03030303";
-		opB <= x"ffffffe2";
-		wait for 10 ns;
-		check_equal(ALU_out, std_logic_vector'(x"0c0c0c0c"), "SLL 0x03030303 << 2 = 0x0c0c0c0c");
-
-		control <= "001000"; -- SLLI
-		opA <= x"03030303";
-		opB <= x"ffffffe2";
-		wait for 10 ns;
-		check_equal(ALU_out, std_logic_vector'(x"0c0c0c0c"), "SLLI 0x03030303 << 2 = 0x0c0c0c0c");
-
-		control <= "101001"; -- SRL
-		opA <= x"83030303";
-		opB <= x"ffffffe2";
-		wait for 10 ns;
-		check_equal(ALU_out, std_logic_vector'(x"20C0C0C0"), "SRL 0x83030303 << 2 = 20c0c0c0");
-
-		control <= "101000"; -- SRLI
-		opA <= x"83030303";
-		opB <= x"ffffffe2";
-		wait for 10 ns;
-		check_equal(ALU_out, std_logic_vector'(x"20C0C0C0"), "SRLI 0x83030303 << 2 = 20c0c0c0");
-
-		control <= "101101"; -- SRA
-		opA <= x"83030303";
-		opB <= x"ffffffe2";
-		wait for 10 ns;
-		check_equal(ALU_out, std_logic_vector'(x"e0c0c0c0"), "SRA 0x83030303 << 2 = e0c0c0c0");
-
-		control <= "101100"; -- SRAI
-		opA <= x"83030303";
-		opB <= x"ffffffe2";
-		wait for 10 ns;
-		check_equal(ALU_out, std_logic_vector'(x"e0c0c0c0"), "SRAI 0x83030303 << 2 = e0c0c0c0");
-
-		control <= "010001"; -- SLT
-		opA <= std_logic_vector(to_signed(-20, opA'length));
-		opB <= std_logic_vector(to_signed(-5, opB'length));
-		wait for 10 ns;
-		check_equal(ALU_out, std_logic_vector'(x"00000001"), "SLT -20 < -5 = 1");
-
-		control <= "010001"; -- SLT
-		opA <= std_logic_vector(to_signed(-20, opA'length));
-		opB <= std_logic_vector(to_signed(-20, opB'length));
-		wait for 10 ns;
-		check_equal(ALU_out, std_logic_vector'(x"00000000"), "SLT -20 >= -20 = 0");
-
-		control <= "010001"; -- SLT
-		opA <= std_logic_vector(to_signed(-5, opA'length));
-		opB <= std_logic_vector(to_signed(-20, opB'length));
-		wait for 10 ns;
-		check_equal(ALU_out, std_logic_vector'(x"00000000"), "SLT -5 >= -20 = 0");
-
-		control <= "010000"; -- SLTI
-		opA <= std_logic_vector(to_signed(-20, opA'length));
-		opB(11 downto 0) <= std_logic_vector(to_signed(-5, 12));
-		opB(31 downto 12) <= (others => '0');
-		wait for 10 ns;
-		check_equal(ALU_out, std_logic_vector'(x"00000001"), "SLTI -20 < -5 = 1");
-
-		control <= "010000"; -- SLTI
-		opA <= std_logic_vector(to_signed(-20, opA'length));
-		opB(11 downto 0) <= std_logic_vector(to_signed(-20, 12));
-		opB(31 downto 12) <= (others => '0');
-		wait for 10 ns;
-		check_equal(ALU_out, std_logic_vector'(x"00000000"), "SLTI -20 >= -20 = 0");
-
-		control <= "010000"; -- SLTI
-		opA <= std_logic_Vector(to_signed(-5, opA'length));
-		opB(11 downto 0) <= std_logic_vector(to_signed(-20, 12));
-		opB(31 downto 12) <= (others => '0');
-		wait for 10 ns;
-		check_equal(ALU_out, std_logic_vector'(x"00000000"), "SLTI -5 >= -20 = 0");
-
-		control <= "011001"; -- SLTU
-		opA <= x"80000000";
-		opB <= x"80000001";
-		wait for 10 ns;
-		check_equal(ALU_out, std_logic_vector'(x"00000001"), "SLTU 0x80000000 < 0x80000001 = 1");
-
-		control <= "011001"; -- SLTU
-		opA <= x"80000000";
-		opB <= x"80000000";
-		wait for 10 ns;
-		check_equal(ALU_out, std_logic_vector'(x"00000000"), "SLTU 0x80000000 >= 0x80000000 = 0");
-
-		control <= "011001"; -- SLTU
-		opA <= x"80000001";
-		opB <= x"80000000";
-		wait for 10 ns;
-		check_equal(ALU_out, std_logic_vector'(x"00000000"), "SLTU 0x80000001 >= 0x80000000 = 0");
-
-		control <= "011000"; -- SLTIU
-		opA <= x"00000800";
-		opB <= x"00000801";
-		wait for 10 ns;
-		check_equal(ALU_out, std_logic_vector'(x"00000001"), "SLTIU 0x00000800 < 0x00000801 = 1");
-
-		control <= "011000"; -- SLTIU
-		opA <= x"00000800";
-		opB <= x"00000800";
-		wait for 10 ns;
-		check_equal(ALU_out, std_logic_vector'(x"00000000"), "SLTIU 0x00000800 >= 0x00000800 = 0");
-
-		control <= "011000"; -- SLTIU
-		opA <= x"80000001";
-		opB <= x"00000800";
-		wait for 10 ns;
-		check_equal(ALU_out, std_logic_vector'(x"00000000"), "SLTIU 0x80000001 >= 0x00000800 = 0");
-
-		control <= "111001"; -- AND
+		ALU_control <= "00011"; -- AND
 		opA <= x"cccccccc";
 		opB <= x"aaaaaaaa";
 		wait for 10 ns;
 		check_equal(ALU_out, std_logic_vector'(x"88888888"), "AND 0xcccccccc & 0xaaaaaaaa = 0x88888888");
 
-		control <= "110001"; -- OR
+		ALU_control <= "00100"; -- OR
 		opA <= x"cccccccc";
 		opB <= x"aaaaaaaa";
 		wait for 10 ns;
 		check_equal(ALU_out, std_logic_vector'(x"eeeeeeee"), "OR 0xcccccccc & 0xaaaaaaaa = 0xeeeeeeee");
 
-		control <= "100001"; -- XOR
+		ALU_control <= "00101"; -- XOR
 		opA <= x"cccccccc";
 		opB <= x"aaaaaaaa";
 		wait for 10 ns;
 		check_equal(ALU_out, std_logic_vector'(x"66666666"), "XOR 0xcccccccc & 0xaaaaaaaa = 0x66666666");
+
+		ALU_control <= "00110"; -- SLT
+		opA <= std_logic_vector(to_signed(-20, opA'length));
+		opB <= std_logic_vector(to_signed(-5, opB'length));
+		wait for 10 ns;
+		check_equal(ALU_out, std_logic_vector'(x"00000001"), "SLT -20 < -5 = 1");
+
+		ALU_control <= "00110"; -- SLT
+		opA <= std_logic_vector(to_signed(-20, opA'length));
+		opB <= std_logic_vector(to_signed(-20, opB'length));
+		wait for 10 ns;
+		check_equal(ALU_out, std_logic_vector'(x"00000000"), "SLT -20 >= -20 = 0");
+
+		ALU_control <= "00110"; -- SLT
+		opA <= std_logic_vector(to_signed(-5, opA'length));
+		opB <= std_logic_vector(to_signed(-20, opB'length));
+		wait for 10 ns;
+		check_equal(ALU_out, std_logic_vector'(x"00000000"), "SLT -5 >= -20 = 0");
+
+		ALU_control <= "00111"; -- SLTU
+		opA <= x"80000000";
+		opB <= x"80000001";
+		wait for 10 ns;
+		check_equal(ALU_out, std_logic_vector'(x"00000001"), "SLTU 0x80000000 < 0x80000001 = 1");
+
+		ALU_control <= "00111"; -- SLTU
+		opA <= x"80000000";
+		opB <= x"80000000";
+		wait for 10 ns;
+		check_equal(ALU_out, std_logic_vector'(x"00000000"), "SLTU 0x80000000 >= 0x80000000 = 0");
+
+		ALU_control <= "00111"; -- SLTU
+		opA <= x"80000001";
+		opB <= x"80000000";
+		wait for 10 ns;
+		check_equal(ALU_out, std_logic_vector'(x"00000000"), "SLTU 0x80000001 >= 0x80000000 = 0");
+
+		ALU_control <= "01000"; -- SLL
+		opA <= x"03030303";
+		opB <= x"ffffffe2";
+		wait for 10 ns;
+		check_equal(ALU_out, std_logic_vector'(x"0c0c0c0c"), "SLL 0x03030303 << 2 = 0x0c0c0c0c");
+
+		ALU_control <= "01001"; -- SRL
+		opA <= x"83030303";
+		opB <= x"ffffffe2";
+		wait for 10 ns;
+		check_equal(ALU_out, std_logic_vector'(x"20C0C0C0"), "SRL 0x83030303 << 2 = 20c0c0c0");
+
+		ALU_control <= "01010"; -- SRA
+		opA <= x"83030303";
+		opB <= x"ffffffe2";
+		wait for 10 ns;
+		check_equal(ALU_out, std_logic_vector'(x"e0c0c0c0"), "SRA 0x83030303 << 2 = e0c0c0c0");
 
 		wait for 10 ns;
 
@@ -216,7 +151,7 @@ begin
 	-----------------------------------------------------------
 	DUT : entity work.ALU
 		port map (
-			control => control,
+			ALU_control => ALU_control,
 			opA     => opA,
 			opB     => opB,
 			ALU_out => ALU_out
