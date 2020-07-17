@@ -12,9 +12,9 @@ use ieee.numeric_std.all;
 
 entity Register_Memory is
   generic (
-    address_width : integer;
-    data_width    : integer;
-    depth         : integer
+    address_width : integer := 32;
+    data_width    : integer := 32;
+    depth         : integer := 4096
   );
   port (
     clk     : in std_logic;
@@ -34,14 +34,9 @@ architecture rtl of Register_Memory is
   shared variable RAM : ram_type := (others => (others => '0')) ;
 
 begin
-  process(clk)
-  begin
-    if clk'event and clk = '1' then
+
      R_Data_1 <= RAM(to_integer(unsigned(R_Reg_1)));
      R_Data_2 <= RAM(to_integer(unsigned(R_Reg_2)));
-    end if;
-  end process;
-
   process(clk)
   begin
     if clk'event and clk = '0' then

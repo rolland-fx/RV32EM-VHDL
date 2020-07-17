@@ -1,2 +1,4 @@
+INFO: [VRFC 10-163] Analyzing VHDL file "C:/Users/jeanp/Documents/Ecole/ELE749/RV32EM-VHDL/RV32EM-VHDL.srcs/sources_1/new/Register_Memory.vhd" into library xil_defaultlib
+INFO: [VRFC 10-3107] analyzing entity 'Register_Memory'
 INFO: [VRFC 10-163] Analyzing VHDL file "C:/Users/jeanp/Documents/Ecole/ELE749/RV32EM-VHDL/RV32EM-VHDL.srcs/sources_1/new/Register_Memory_tb.vhd" into library xil_defaultlib
 INFO: [VRFC 10-3107] analyzing entity 'Register_Memory_tb'

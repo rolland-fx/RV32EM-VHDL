@@ -16,7 +16,7 @@ architecture testbench of Register_Memory_tb is
 	-- Testbench DUT generics
 	constant address_width : integer := 32;
 	constant data_width    : integer := 32;
-	constant depth         : integer := 4095;
+	constant depth         : integer := 4096;
 
 	-- Testbench DUT ports
 	signal clk      : std_logic;

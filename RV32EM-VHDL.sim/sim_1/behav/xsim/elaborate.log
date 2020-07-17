@@ -12,6 +12,6 @@ Compiling package std.textio
 Compiling package ieee.std_logic_1164
 Compiling package ieee.numeric_std
 Compiling package ieee.std_logic_textio
-Compiling architecture rtl of entity xil_defaultlib.Register_Memory [\Register_Memory(address_width=3...]
+Compiling architecture rtl of entity xil_defaultlib.Register_Memory [register_memory_default]
 Compiling architecture testbench of entity xil_defaultlib.register_memory_tb
 Built simulation snapshot Register_Memory_tb_behav
