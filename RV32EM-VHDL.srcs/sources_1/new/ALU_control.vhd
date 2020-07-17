@@ -6,7 +6,7 @@
 -- Author      : Alexandre Viau <alexandre.viau.2@ens.etsmtl.ca
 -- Company     : École de technologie supérieur
 -- Created     : Fri Jul 10 09:14:57 2020
--- Last update : Fri Jul 10 09:58:37 2020
+-- Last update : Mon Jul 13 17:26:20 2020
 -- Platform    : NùA
 -- Standard    : <VHDL-2008 | VHDL-2002 | VHDL-1993 | VHDL-1987>
 --------------------------------------------------------------------------------
@@ -36,7 +36,8 @@ begin
 		"00001" when "00",
 		"00010" when "01" ,
 		mux_1   when "10" ,
-		mux_2   when "11";
+		mux_2   when "11",
+		"00000" when others;
 
 	with instr_30_25_14_to_12_3 select
 	mux_1 <=
@@ -49,24 +50,25 @@ begin
 		"00111" when "000110" ,
 		"01000" when "000010" ,
 		"01001" when "001010" ,
-		"01010" when "010000" ,
-		"01011" when "010010" ,
-		"01100" when "010100" ,
-		"01101" when "010110" ,
-		"01110" when "011000" ,
-		"01111" when "011010" ,
-		"10000" when "011100" ,
+		"01010" when "101010" ,
+		"01011" when "010000" ,
+		"01100" when "010010" ,
+		"01101" when "010100" ,
+		"01110" when "010110" ,
+		"01111" when "011000" ,
+		"10000" when "011010" ,
+		"10001" when "011100" ,
 		"10010" when "011110" ,
 		"00000" when others;
 
-	with instr_30_25_14_to_12_3(3 downto 0) select
+	with instr_30_25_14_to_12_3(3 downto 1) select
 	mux_2 <=
-		"00001" when "0000" ,
-		"00011" when "1110" ,
-		"00100" when "1100" ,
-		"00101" when "1000" ,
-		"00110" when "0100" ,
-		"00111" when "0110" ,
+		"00001" when "000" ,
+		"00011" when "111" ,
+		"00100" when "110" ,
+		"00101" when "100" ,
+		"00110" when "010" ,
+		"00111" when "011" ,
 		"00000" when others;
 
 end architecture rtl;
