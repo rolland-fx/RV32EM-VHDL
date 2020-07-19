@@ -3,6 +3,13 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 package part is
 
+    COMPONENT Instruction_Memory
+      PORT (
+        a : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
+        spo : OUT STD_LOGIC_VECTOR(31 DOWNTO 0)
+      );
+    END COMPONENT;
+    
 	component instruction_fetch is
 		port (
 			clk       : in  std_logic;

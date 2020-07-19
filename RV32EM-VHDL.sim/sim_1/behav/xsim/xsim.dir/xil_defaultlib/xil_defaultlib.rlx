@@ -2,5 +2,8 @@
 2018.3
 Dec  7 2018
 00:33:28
+C:/Users/jeanp/Documents/Ecole/ELE749/RV32EM-VHDL/RV32EM-VHDL.srcs/sources_1/ip/Instruction_Memory/Instruction_Memory_sim_netlist.vhdl,1595200084,vhdl,,,,instruction_memory;instruction_memory_dist_mem_gen_v8_0_12;instruction_memory_dist_mem_gen_v8_0_12_synth;instruction_memory_rom,,,,,,,,
+C:/Users/jeanp/Documents/Ecole/ELE749/RV32EM-VHDL/RV32EM-VHDL.srcs/sources_1/new/IF_stage_tb.vhd,1595199967,vhdl,,,,if_stage_tb,,,,,,,,
 C:/Users/jeanp/Documents/Ecole/ELE749/RV32EM-VHDL/RV32EM-VHDL.srcs/sources_1/new/Register_Memory.vhd,1595014652,vhdl,C:/Users/jeanp/Documents/Ecole/ELE749/RV32EM-VHDL/RV32EM-VHDL.srcs/sources_1/new/Register_Memory_tb.vhd,,,register_memory,,,,,,,,
 C:/Users/jeanp/Documents/Ecole/ELE749/RV32EM-VHDL/RV32EM-VHDL.srcs/sources_1/new/Register_Memory_tb.vhd,1594616847,vhdl,,,,register_memory_tb,,,,,,,,
+C:/Users/jeanp/Documents/Ecole/ELE749/RV32EM-VHDL/RV32EM-VHDL.srcs/sources_1/new/part.vhd,1595199985,vhdl,C:/Users/jeanp/Documents/Ecole/ELE749/RV32EM-VHDL/RV32EM-VHDL.srcs/sources_1/new/IF_stage_tb.vhd,,,part,,,,,,,,

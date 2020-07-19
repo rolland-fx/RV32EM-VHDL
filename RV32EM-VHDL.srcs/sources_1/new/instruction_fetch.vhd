@@ -38,7 +38,7 @@ use work.part.all;
 entity instruction_fetch is
 	Port (
 		clk       : in  std_logic;
-		PC_in     : in  std_logic_vector(31 downto 0);
+		PC_in     : in  std_logic_vector(7 downto 0);
 		INSTR_out : out std_logic_vector(31 downto 0)
 	);
 end instruction_fetch;
@@ -46,20 +46,10 @@ end instruction_fetch;
 architecture Behavioral of instruction_fetch is
 
 begin
-
-	data_memory_1 : data_memory
-		generic map (
-			address_size => 12,
-			data_size    => 32,
-			memory_size  => 4096
-		)
-		port map (
-			clk        => clk,
-			MemRead    => std_logic'('1'),
-			MemWrite   => std_logic'('0'),
-			address    => PC_in(11 downto 0),
-			write_data => (others => '0'),
-			read_data  => INSTR_out
-		);
+Instr_Mem : Instruction_Memory
+  PORT MAP (
+    a => PC_in,
+    spo => INSTR_out
+  );
 
 end Behavioral;

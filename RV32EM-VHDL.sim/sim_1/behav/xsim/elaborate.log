@@ -1,6 +1,6 @@
 Vivado Simulator 2018.3
 Copyright 1986-1999, 2001-2018 Xilinx, Inc. All Rights Reserved.
-Running: C:/Xilinx/Vivado/2018.3/bin/unwrapped/win64.o/xelab.exe -wto 299e3dd921ad4d6b9445da91903c475b --incr --debug typical --relax --mt 2 -L xil_defaultlib -L secureip --snapshot Register_Memory_tb_behav xil_defaultlib.Register_Memory_tb -log elaborate.log 
+Running: C:/Xilinx/Vivado/2018.3/bin/unwrapped/win64.o/xelab.exe -wto 299e3dd921ad4d6b9445da91903c475b --incr --debug typical --relax --mt 2 -L xil_defaultlib -L secureip -L xpm --snapshot IF_stage_tb_behav xil_defaultlib.IF_stage_tb -log elaborate.log 
 Using 2 slave threads.
 Starting static elaboration
 Completed static elaboration
@@ -12,6 +12,33 @@ Compiling package std.textio
 Compiling package ieee.std_logic_1164
 Compiling package ieee.numeric_std
 Compiling package ieee.std_logic_textio
-Compiling architecture rtl of entity xil_defaultlib.Register_Memory [register_memory_default]
-Compiling architecture testbench of entity xil_defaultlib.register_memory_tb
-Built simulation snapshot Register_Memory_tb_behav
+Compiling package xil_defaultlib.part
+Compiling package unisim.vcomponents
+Compiling package ieee.vital_timing
+Compiling package ieee.vital_primitives
+Compiling package unisim.vpkg
+Compiling architecture gnd_v of entity unisim.GND [gnd_default]
+Compiling architecture lut5_v of entity unisim.LUT5 [\LUT5(init="00000000000111110000...]
+Compiling architecture lut5_v of entity unisim.LUT5 [\LUT5(init="00000000000100000010...]
+Compiling architecture lut5_v of entity unisim.LUT5 [\LUT5(init="00000010000000100011...]
+Compiling architecture lut5_v of entity unisim.LUT5 [\LUT5(init="00000000000100110001...]
+Compiling architecture lut5_v of entity unisim.LUT5 [\LUT5(init="00000000010000000000...]
+Compiling architecture lut3_v of entity unisim.LUT3 [\LUT3(init="00010000")(0,7)\]
+Compiling architecture lut5_v of entity unisim.LUT5 [\LUT5(init="11111111111111111111...]
+Compiling architecture lut4_v of entity unisim.LUT4 [\LUT4(init="0000000000000001")(0...]
+Compiling architecture lut5_v of entity unisim.LUT5 [\LUT5(init="00000000000000010000...]
+Compiling architecture lut5_v of entity unisim.LUT5 [\LUT5(init="00000000000000100000...]
+Compiling architecture lut5_v of entity unisim.LUT5 [\LUT5(init="00000000000000000000...]
+Compiling architecture lut4_v of entity unisim.LUT4 [\LUT4(init="1111111111111110")(0...]
+Compiling architecture lut5_v of entity unisim.LUT5 [\LUT5(init="00000100000000010000...]
+Compiling architecture lut5_v of entity unisim.LUT5 [\LUT5(init="00000000000000000000...]
+Compiling architecture lut5_v of entity unisim.LUT5 [\LUT5(init="00000000000100000000...]
+Compiling architecture lut5_v of entity unisim.LUT5 [\LUT5(init="00000000000000000101...]
+Compiling architecture lut5_v of entity unisim.LUT5 [\LUT5(init="00000001000101010000...]
+Compiling architecture lut4_v of entity unisim.LUT4 [\LUT4(init="0000000001110101")(0...]
+Compiling architecture structure of entity xil_defaultlib.Instruction_Memory_rom [instruction_memory_rom_default]
+Compiling architecture structure of entity xil_defaultlib.Instruction_Memory_dist_mem_gen_v8_0_12_synth [instruction_memory_dist_mem_gen_...]
+Compiling architecture structure of entity xil_defaultlib.Instruction_Memory_dist_mem_gen_v8_0_12 [instruction_memory_dist_mem_gen_...]
+Compiling architecture structure of entity xil_defaultlib.Instruction_Memory [instruction_memory_default]
+Compiling architecture testbench of entity xil_defaultlib.if_stage_tb
+Built simulation snapshot IF_stage_tb_behav
