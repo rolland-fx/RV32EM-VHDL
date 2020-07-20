@@ -16,9 +16,14 @@ package part is
     END COMPONENT;
     
     COMPONENT Instruction_Memory
+	generic (
+		address_size : integer;
+		data_size    : integer;
+		memory_size  : integer 
+	);
       PORT (
-        a : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
-        spo : OUT STD_LOGIC_VECTOR(31 DOWNTO 0)
+        PC_in : IN STD_LOGIC_VECTOR(address_size-1 DOWNTO 0);
+        Instr_OUT : OUT STD_LOGIC_VECTOR(data_size-1 DOWNTO 0)
       );
     END COMPONENT;
     
@@ -126,9 +131,9 @@ package part is
 
 	component data_memory is
 		generic (
-			address_size : integer := 12;
-			data_size    : integer := 32;
-			memory_size  : integer := 4096
+			address_size : integer;
+			data_size    : integer;
+			memory_size  : integer
 		);
 		port (
 			clk        : in  std_logic;

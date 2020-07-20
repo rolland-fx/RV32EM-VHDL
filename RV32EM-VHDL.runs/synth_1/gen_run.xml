@@ -3,8 +3,6 @@
   <File Type="PA-TCL" Name="instruction_fetch.tcl"/>
   <File Type="REPORTS-TCL" Name="instruction_fetch_reports.tcl"/>
   <File Type="RDS-RDS" Name="instruction_fetch.vds"/>
-  <File Type="RDS-UTIL" Name="instruction_fetch_utilization_synth.rpt"/>
-  <File Type="RDS-UTIL-PB" Name="instruction_fetch_utilization_synth.pb"/>
   <File Type="RDS-DCP" Name="instruction_fetch.dcp"/>
   <FileSet Name="sources" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1">
     <Filter Type="Srcs"/>
