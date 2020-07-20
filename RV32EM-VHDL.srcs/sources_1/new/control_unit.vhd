@@ -28,7 +28,7 @@ begin
 	case Opcode is
 		when "0110011" => --R type
 			if (Funct3 = ) then
-
+				
 			else
 
 			end if;
@@ -44,25 +44,25 @@ begin
 			IS_Branch  <= ;
 			IS_Jalr    <= ;
 		when "0010111" => --AUIPC
-			Exception  <= ;
-			Jump       <= ;
-			IF_Flush   <= ;
-			ID_Flush   <= ;
-			EX_Flush   <= ;
-			Control_WB <= ;
-			Control_M  <= ;
-			Control_EX <= ;
-			IS_Branch  <= ;
-			IS_Jalr    <= ;
+			Exception  <= '0';
+			Jump       <= '0';
+			IF_Flush   <= '0';
+			ID_Flush   <= '0';
+			EX_Flush   <= '0';
+			Control_WB <= "10";
+			Control_M  <= "00000";
+			Control_EX <= "000101";
+			IS_Branch  <= '0';
+			IS_Jalr    <= '0';
 		when "1101111" => --JAL
 			Exception  <= '0';
 			Jump       <= '1';
 			IF_Flush   <= '1';
 			ID_Flush   <= '0';
 			EX_Flush   <= '0';
-			Control_WB <= ;
-			Control_M  <= ;
-			Control_EX <= ;
+			Control_WB <= "10";
+			Control_M  <= "00000";
+			Control_EX <= "000110";
 			IS_Branch  <= '0';
 			IS_Jalr    <= '0';
 		when "1100111" => --JALR
@@ -72,9 +72,9 @@ begin
 				IF_Flush   <= '1';
 				ID_Flush   <= '0';
 				EX_Flush   <= '0';
-				Control_WB <= ;
-				Control_M  <= ;
-				Control_EX <= ;
+				Control_WB <= "10";
+				Control_M  <= "00000";
+				Control_EX <= "000110";
 				IS_Branch  <= '0';
 				IS_Jalr    <= '1';
 			else
@@ -193,16 +193,16 @@ begin
 			end if;
 		when "1110011" => --ECALL
 			if (Funct3 = "000") then
-				Exception  <=;
-				Jump       <=;
-				IF_Flush   <=;
-				ID_Flush   <=;
-				EX_Flush   <=;
-				Control_WB <=;
-				Control_M  <=;
-				Control_EX <=;
-				IS_Branch  <=;
-				IS_Jalr    <=;
+				Exception  <= '0';
+				Jump       <= '0';
+				IF_Flush   <= '0';
+				ID_Flush   <= '0';
+				EX_Flush   <= '0';
+				Control_WB <= "00";
+				Control_M  <= "00000";
+				Control_EX <= "000000";
+				IS_Branch  <= '0';
+				IS_Jalr    <= '0';
 			else
 				Exception  <= '1';
 				Jump       <= '0';
@@ -225,9 +225,8 @@ begin
 				Control_M  <= "00000";
 				Control_EX <= "000000";
 				IS_Branch  <= '0';
-				IS_Jalr    <= '0';;
+				IS_Jalr    <= '0';
 	end case;
 end process;
-
 
 end Behavioral;
