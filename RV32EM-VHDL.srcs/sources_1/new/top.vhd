@@ -113,7 +113,7 @@ begin
 				s_o_IF_instr <= s_i_IF_instr;
 			end if;
 		end if;
-		if (s_c_IF_flush) then
+		if (s_c_IF_flush = '1') then
 			s_o_IF_PC <= (others => '0');
 			s_o_IF_instr <= (others => '0');
 		end if;
@@ -134,7 +134,7 @@ begin
 					s_o_ID_EX                     <= s_i_ID_EX;
 			end if;
 		end if;
-		if (s_c_ID_flush) then
+		if (s_c_ID_flush = '1') then
 				s_o_ID_PC                     <= (others => '0');
 				s_o_ID_RD1                    <= (others => '0');
 				s_o_ID_RD2                    <= (others => '0');
@@ -158,7 +158,7 @@ begin
 					s_o_EX_M             <= s_i_EX_M;
 			end if;
 		end if;
-		if (s_c_EX_flush) then
+		if (s_c_EX_flush = '1') then
 				s_o_EX_ALU_OUT       <= (others => '0');
 				s_o_EX_RD2           <= (others => '0');
 				s_o_EX_instr_11_to_7 <= (others => '0');
@@ -177,7 +177,7 @@ begin
 					s_o_MEM_WB   <= s_i_MEM_WB;
 			end if;
 		end if;
-		if (s_c_MEM_flush) then
+		if (s_c_MEM_flush = '1') then
 				s_o_MEM_DATA <= (others => '0');
 				s_o_MEM_ALU_OUT <= (others => '0');
 				s_o_MEM_instr_11_to_7   <= (others => '0');
