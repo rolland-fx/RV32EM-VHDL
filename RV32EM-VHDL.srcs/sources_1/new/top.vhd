@@ -6,18 +6,12 @@ use work.part.all;
 
 entity Main is
 	Port (
-		i_clk   : in STD_LOGIC;
-		i_run   : in STD_LOGIC;
-		i_reset : in STD_LOGIC
+		i_clk   : in STD_LOGIC
 	);
 
 end Main;
 
 architecture Behavioral of Main is
-
-	--------GENERAL SIGNAL -------
-	signal s_stall    : std_logic;
-	signal s_IF_FLUSH : std_logic;
 
 	--------PC REGISTER-----------
 	-- ENTRY OF PC REGISTER
@@ -32,6 +26,9 @@ architecture Behavioral of Main is
 	-- OUPUT of IF/ID pipeline
 	signal s_o_IF_PC : std_logic_vector(31 downto 0);
 	signal s_o_IF_instr : std_logic_vector(31 downto 0);
+	-- MANAG of IF/ID pipeline
+	signal s_c_IF_flush : std_logic;
+	signal s_c_IF_stall : std_logic;
 
 	--------ID/EX STAGE ----------
 	-- ENTRY of ID/EX pipeline
@@ -55,7 +52,10 @@ architecture Behavioral of Main is
 	-- CONTROL OUT of ID/EX pipeline
 	signal s_o_ID_WB : std_logic_vector(1 downto 0);
 	signal s_o_ID_M  : std_logic_vector(1 downto 0);
-	signal s_o_ID_EX : std_logic_vector(5 downto 0);
+	signal s_o_ID_EX : std_logic_vector(5 downto 0);	
+	-- MANAG of ID/EX pipeline
+	signal s_c_ID_flush : std_logic;
+	signal s_c_ID_stall : std_logic;
 
 	--------EX/MEM STAGE ----------
 	-- ENTRY of ID/EX pipeline
@@ -72,6 +72,9 @@ architecture Behavioral of Main is
 	-- CONTROL OUT of ID/EX pipeline
 	signal s_o_EX_WB : std_logic_vector(1 downto 0);
 	signal s_o_EX_M  : std_logic_vector(1 downto 0);
+	-- MANAG of ID/EX pipeline
+	signal s_c_EX_flush : std_logic;
+	signal s_c_EX_stall : std_logic;
 
 	--------MEM/WB STAGE ----------
 	-- ENTRY of MEM/WB pipeline
@@ -86,7 +89,9 @@ architecture Behavioral of Main is
 	signal s_o_MEM_instr_11_to_7   : std_logic_vector(4 downto 0);
 	-- CONTROL OUT of MEM/WB pipeline
 	signal s_o_MEM_WB : std_logic_vector(1 downto 0);
-
+	-- MANAG of MEM/WB pipeline
+	signal s_c_MEM_flush : std_logic;
+	signal s_c_MEM_stall : std_logic;
 	signal WB_sig : std_logic_vector(31 downto 0);
 
 begin
@@ -100,15 +105,24 @@ begin
 	s_i_MEM_WB <= s_o_EX_WB;
 	s_i_MEM_instr_11_to_7 <= s_o_EX_instr_11_to_7;
 
-	MainControl : Process(i_clk) is --synchron process
+	MainControl_IF : Process(i_clk,s_c_IF_flush) is -- IF/ID
 	begin
 		if rising_edge(i_clk) then  -- on rising clock edge
-			if i_reset = '0' then   -- reset is synchron 
-				if i_run = '1' then -- run
-					                -- ID/ID
-					s_o_IF_PC <= s_i_IF_PC;
-					s_o_IF_instr <= s_i_IF_instr;
-					--ID/EX
+			if s_c_IF_stall = '0' then -- run
+				s_o_IF_PC <= s_i_IF_PC;
+				s_o_IF_instr <= s_i_IF_instr;
+			end if;
+		end if;
+		if (s_c_IF_flush) then
+			s_o_IF_PC <= (others => '0');
+			s_o_IF_instr <= (others => '0');
+		end if;
+	end process;
+	
+	MainControl_ID : Process(i_clk,s_c_ID_flush) is -- ID/EX
+	begin
+		if rising_edge(i_clk) then  -- on rising clock edge
+			if s_c_ID_stall = '0' then -- run
 					s_o_ID_PC                     <= s_i_ID_PC;
 					s_o_ID_RD1                    <= s_i_ID_RD1;
 					s_o_ID_RD2                    <= s_i_ID_RD2;
@@ -118,22 +132,9 @@ begin
 					s_o_ID_WB                     <= s_i_ID_WB;
 					s_o_ID_M                      <= s_i_ID_M;
 					s_o_ID_EX                     <= s_i_ID_EX;
-					-- EX/MEM
-					s_o_EX_ALU_OUT       <= s_i_EX_ALU_OUT;
-					s_o_EX_RD2           <= s_i_EX_RD2;
-					s_o_EX_instr_11_to_7 <= s_i_EX_instr_11_to_7;
-					s_o_EX_WB            <= s_i_EX_WB;
-					s_o_EX_M             <= s_i_EX_M;
-					-- MEM/WB
-					s_o_MEM_DATA <= s_i_MEM_DATA;
-					s_o_MEM_ALU_OUT <= s_i_MEM_ALU_OUT;
-					s_o_MEM_instr_11_to_7   <= s_i_MEM_instr_11_to_7;
-					s_o_MEM_WB   <= s_i_MEM_WB;
-				end if;
-			else -- reset =» all level are force to Zero
-				s_o_IF_PC <= (others => '0');
-				s_o_IF_instr <= (others => '0');
-				--ID/EX
+			end if;
+		end if;
+		if (s_c_ID_flush) then
 				s_o_ID_PC                     <= (others => '0');
 				s_o_ID_RD1                    <= (others => '0');
 				s_o_ID_RD2                    <= (others => '0');
@@ -143,18 +144,44 @@ begin
 				s_o_ID_WB                     <= (others => '0');
 				s_o_ID_M                      <= (others => '0');
 				s_o_ID_EX                     <= (others => '0');
-				-- EX/MEM
+		end if;
+	end process;
+	
+	MainControl_EX : Process(i_clk,s_c_EX_flush) is -- EX/MEM
+	begin
+		if rising_edge(i_clk) then  -- on rising clock edge
+			if s_c_EX_stall = '0' then -- run
+					s_o_EX_ALU_OUT       <= s_i_EX_ALU_OUT;
+					s_o_EX_RD2           <= s_i_EX_RD2;
+					s_o_EX_instr_11_to_7 <= s_i_EX_instr_11_to_7;
+					s_o_EX_WB            <= s_i_EX_WB;
+					s_o_EX_M             <= s_i_EX_M;
+			end if;
+		end if;
+		if (s_c_EX_flush) then
 				s_o_EX_ALU_OUT       <= (others => '0');
 				s_o_EX_RD2           <= (others => '0');
 				s_o_EX_instr_11_to_7 <= (others => '0');
 				s_o_EX_WB            <= (others => '0');
 				s_o_EX_M             <= (others => '0');
-				-- MEM/WB
+		end if;
+	end process;
+	
+	MainControl_MEM : Process(i_clk,s_c_MEM_flush) is -- MEM/WB
+	begin
+		if rising_edge(i_clk) then  -- on rising clock edge
+			if s_c_MEM_stall = '0' then -- run
+					s_o_MEM_DATA <= s_i_MEM_DATA;
+					s_o_MEM_ALU_OUT <= s_i_MEM_ALU_OUT;
+					s_o_MEM_instr_11_to_7   <= s_i_MEM_instr_11_to_7;
+					s_o_MEM_WB   <= s_i_MEM_WB;
+			end if;
+		end if;
+		if (s_c_MEM_flush) then
 				s_o_MEM_DATA <= (others => '0');
 				s_o_MEM_ALU_OUT <= (others => '0');
 				s_o_MEM_instr_11_to_7   <= (others => '0');
 				s_o_MEM_WB   <= (others => '0');
-			end if;
 		end if;
 	end process;
 
