@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GenRun Id="Instruction_Memory_synth_1" LaunchPart="xc7a35tcpg236-1" LaunchTime="1595200053">
+<GenRun Id="Instruction_Memory_synth_1" LaunchPart="xc7a35tcpg236-1" LaunchTime="1595283334">
   <File Type="PA-TCL" Name="Instruction_Memory.tcl"/>
   <File Type="RDS-PROPCONSTRS" Name="Instruction_Memory_drc_synth.rpt"/>
   <File Type="REPORTS-TCL" Name="Instruction_Memory_reports.tcl"/>
@@ -42,9 +42,7 @@
     </Config>
   </FileSet>
   <Strategy Version="1" Minor="2">
-    <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2018">
-      <Desc>Vivado Synthesis Defaults</Desc>
-    </StratHandle>
+    <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2018"/>
     <Step Id="synth_design"/>
   </Strategy>
 </GenRun>

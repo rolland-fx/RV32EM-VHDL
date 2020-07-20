@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GenRun Id="synth_1" LaunchPart="xc7a35tcpg236-1" LaunchTime="1595199344">
   <File Type="PA-TCL" Name="instruction_fetch.tcl"/>
-  <File Type="RDS-PROPCONSTRS" Name="instruction_fetch_drc_synth.rpt"/>
   <File Type="REPORTS-TCL" Name="instruction_fetch_reports.tcl"/>
   <File Type="RDS-RDS" Name="instruction_fetch.vds"/>
   <File Type="RDS-UTIL" Name="instruction_fetch_utilization_synth.rpt"/>
   <File Type="RDS-UTIL-PB" Name="instruction_fetch_utilization_synth.pb"/>
   <File Type="RDS-DCP" Name="instruction_fetch.dcp"/>
-  <File Type="VDS-TIMINGSUMMARY" Name="instruction_fetch_timing_summary_synth.rpt"/>
-  <File Type="VDS-TIMING-PB" Name="instruction_fetch_timing_summary_synth.pb"/>
   <FileSet Name="sources" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1">
     <Filter Type="Srcs"/>
     <File Path="$PSRCDIR/sources_1/new/part.vhd">
