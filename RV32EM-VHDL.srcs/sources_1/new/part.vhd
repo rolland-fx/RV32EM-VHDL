@@ -3,6 +3,18 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 package part is
 
+
+    COMPONENT Branch_Compare
+      Port(
+        Is_Branch : in std_logic;
+        Funct3    : in std_logic_vector(2 downto 0);
+        R_Data_1  : in std_logic_vector(31 downto 0);
+        R_Data_2  : in std_logic_vector(31 downto 0);
+    
+        Branch_Cmp_Out : out std_logic
+      );
+    END COMPONENT;
+    
     COMPONENT Instruction_Memory
       PORT (
         a : IN STD_LOGIC_VECTOR(7 DOWNTO 0);

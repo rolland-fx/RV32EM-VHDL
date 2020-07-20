@@ -2,7 +2,7 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use ieee.numeric_std.all;
 
-entity Branch_Cmp is
+entity Branch_Compare is
   Port(
     Is_Branch : in std_logic;
     Funct3    : in std_logic_vector(2 downto 0);
@@ -11,8 +11,8 @@ entity Branch_Cmp is
 
     Branch_Cmp_Out : out std_logic
   );
-end Branch_Cmp;
-architecture Behavioral of Branch_Cmp is
+end Branch_Compare;
+architecture Behavioral of Branch_Compare is
 
   signal IsBEQ       : std_logic;
   signal IsBNE       : std_logic;

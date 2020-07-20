@@ -32,6 +32,7 @@ entity instruction_decode is
 	Port (
 		clk           : in std_logic;
 		isJALR        : in std_logic;
+		isBRANCH        : in std_logic;
 		regWrite_in   : in std_logic;
 		PC_in         : in std_logic_vector(31 downto 0);
 		instr_in      : in std_logic_vector(31 downto 0);
@@ -44,7 +45,8 @@ entity instruction_decode is
 		IMM_out                    : out std_logic_vector(31 downto 0);
 		instr_30_25_14_to_12_3_out : out std_logic_vector(5 downto 0);
 		instr_11_to_7_out          : out std_logic_vector(4 downto 0);
-		jump_out                   : out std_logic_vector(31 downto 0)
+		jump_out                   : out std_logic_vector(31 downto 0);
+		branch_cmp                 : out std_logic
 	);
 end instruction_decode;
 
@@ -88,6 +90,16 @@ begin
 		port map (
 			instruction => instr_in,
 			imm         => imm
+		);
+		
+    Branch_Compare : entity work.Branch_Compare
+		port map (			
+	        Is_Branch => isBRANCH,
+            Funct3 => instr_in(14 downto 12),
+            R_Data_1 => RD1,
+            R_Data_2  => RD2,
+
+            Branch_Cmp_Out => branch_cmp
 		);
 
 	with isJALR select
