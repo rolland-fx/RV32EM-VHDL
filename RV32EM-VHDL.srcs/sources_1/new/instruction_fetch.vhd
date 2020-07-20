@@ -6,7 +6,7 @@
 -- Author      : User Name <user.email@user.company.com>
 -- Company     : User Company Name
 -- Created     : Tue Jun 30 17:59:58 2020
--- Last update : Fri Jul 17 12:25:36 2020
+-- Last update : Mon Jul 20 18:29:20 2020
 -- Platform    : Default Part Number
 -- Standard    : <VHDL-2008 | VHDL-2002 | VHDL-1993 | VHDL-1987>
 --------------------------------------------------------------------------------
@@ -38,7 +38,7 @@ use work.part.all;
 entity instruction_fetch is
 	Port (
 		clk       : in  std_logic;
-		PC_in     : in  std_logic_vector(7 downto 0);
+		PC_in     : in  std_logic_vector(31 downto 0);
 		INSTR_out : out std_logic_vector(31 downto 0)
 	);
 end instruction_fetch;
@@ -48,7 +48,7 @@ architecture Behavioral of instruction_fetch is
 begin
 Instr_Mem : Instruction_Memory
   PORT MAP (
-    a => PC_in,
+    a => PC_in(7 downto 0),
     spo => INSTR_out
   );
 

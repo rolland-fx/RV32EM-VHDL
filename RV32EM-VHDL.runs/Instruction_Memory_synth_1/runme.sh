@@ -24,7 +24,7 @@ else
 fi
 export LD_LIBRARY_PATH
 
-HD_PWD='C:/Users/jeanp/Documents/Ecole/ELE749/RV32EM-VHDL/RV32EM-VHDL.runs/Instruction_Memory_synth_1'
+HD_PWD='C:/Users/alexa/Documents/Vivado/RV32EM-VHDL/RV32EM-VHDL.runs/Instruction_Memory_synth_1'
 cd "$HD_PWD"
 
 HD_LOG=runme.log

@@ -1,8 +1,8 @@
 Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2018.3 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
-| Date         : Sun Jul 19 19:08:04 2020
-| Host         : DESKTOP-Gaming running 64-bit major release  (build 9200)
+| Date         : Mon Jul 20 18:16:06 2020
+| Host         : DESKTOP-VNGM1C4 running 64-bit major release  (build 9200)
 | Command      : report_utilization -file Instruction_Memory_utilization_synth.rpt -pb Instruction_Memory_utilization_synth.pb
 | Design       : Instruction_Memory
 | Device       : 7a35tcpg236-1
