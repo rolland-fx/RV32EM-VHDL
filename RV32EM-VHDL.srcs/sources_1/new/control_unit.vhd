@@ -12,7 +12,7 @@ entity control_unit is
 		ID_Flush   : out std_logic;
 		EX_Flush   : out std_logic;
 		Control_WB : out std_logic_vector(1 downto 0); -- RegWrite(1) MemToReg(1) 
-		Control_M  : out std_logic_vector(4 downto 0); -- MemRead(1) MemWrite(1) MemRead(1) ??
+		Control_M  : out std_logic_vector(2 downto 0); -- MemRead(1) MemWrite(1) MemRead(1)
 		Control_EX : out std_logic_vector(5 downto 0); -- ALUOp(2) ALUSrc1(2) ALUSrc2(2)
 		IS_Branch  : out std_logic;
 		IS_Jalr    : out std_logic
@@ -33,7 +33,7 @@ begin
 			ID_Flush   <= '0';
 			EX_Flush   <= '0';
 			Control_WB <= "10";
-			Control_M  <= "00000";
+			Control_M  <= "000";
 			Control_EX <= "100000";
 			IS_Branch  <= '0';
 			IS_Jalr    <= '0';
@@ -44,7 +44,7 @@ begin
 			ID_Flush   <= '0';
 			EX_Flush   <= '0';
 			Control_WB <= "10";
-			Control_M  <= "00000";
+			Control_M  <= "000";
 			Control_EX <= "001001";
 			IS_Branch  <= '0';
 			IS_Jalr    <= '0';
@@ -55,7 +55,7 @@ begin
 			ID_Flush   <= '0';
 			EX_Flush   <= '0';
 			Control_WB <= "10";
-			Control_M  <= "00000";
+			Control_M  <= "000";
 			Control_EX <= "000101";
 			IS_Branch  <= '0';
 			IS_Jalr    <= '0';
@@ -66,7 +66,7 @@ begin
 			ID_Flush   <= '0';
 			EX_Flush   <= '0';
 			Control_WB <= "10";
-			Control_M  <= "00000";
+			Control_M  <= "000";
 			Control_EX <= "000110";
 			IS_Branch  <= '0';
 			IS_Jalr    <= '0';
@@ -78,7 +78,7 @@ begin
 				ID_Flush   <= '0';
 				EX_Flush   <= '0';
 				Control_WB <= "10";
-				Control_M  <= "00000";
+				Control_M  <= "000";
 				Control_EX <= "000110";
 				IS_Branch  <= '0';
 				IS_Jalr    <= '1';
@@ -89,7 +89,7 @@ begin
 				ID_Flush   <= '0';
 				EX_Flush   <= '0';
 				Control_WB <= "00";
-				Control_M  <= "00000";
+				Control_M  <= "000";
 				Control_EX <= "000000";
 				IS_Branch  <= '0';
 				IS_Jalr    <= '0';
@@ -102,7 +102,7 @@ begin
 				ID_Flush   <= '0';
 				EX_Flush   <= '0';
 				Control_WB <= "00";
-				Control_M  <= "00000";
+				Control_M  <= "000";
 				Control_EX <= "000000";
 				IS_Branch  <= '0';
 				IS_Jalr    <= '0';
@@ -137,7 +137,7 @@ begin
 				ID_Flush   <= '0';
 				EX_Flush   <= '0';
 				Control_WB <= "00";
-				Control_M  <= "00000";
+				Control_M  <= "000";
 				Control_EX <= "000000";
 				IS_Branch  <= '0';
 				IS_Jalr    <= '0';
@@ -149,7 +149,7 @@ begin
 			ID_Flush   <= '0';
 			EX_Flush   <= '0';
 			Control_WB <= "10";
-			Control_M  <= "00000";
+			Control_M  <= "000";
 			Control_EX <= "100001";
 			IS_Branch  <= '0';
 			IS_Jalr    <= '0';
@@ -161,7 +161,7 @@ begin
 				ID_Flush   <= '0';
 				EX_Flush   <= '0';
 				Control_WB <= "00";
-				Control_M  <= "00000";
+				Control_M  <= "000";
 				Control_EX <= "000000";
 				IS_Branch  <= '0';
 				IS_Jalr    <= '0';
@@ -185,7 +185,7 @@ begin
 				ID_Flush   <= '0';
 				EX_Flush   <= '0';
 				Control_WB <= "00";
-				Control_M  <= "00000";
+				Control_M  <= "000";
 				Control_EX <= "000000";
 				IS_Branch  <= '0';
 				IS_Jalr    <= '0';
@@ -196,7 +196,7 @@ begin
 				ID_Flush   <= '0';
 				EX_Flush   <= '0';
 				Control_WB <= "00";
-				Control_M  <= "00000";
+				Control_M  <= "000";
 				Control_EX <= "000000";
 				IS_Branch  <= '0';
 				IS_Jalr    <= '0';
@@ -209,7 +209,7 @@ begin
 				ID_Flush   <= '0';
 				EX_Flush   <= '0';
 				Control_WB <= "00";
-				Control_M  <= "00000";
+				Control_M  <= "000";
 				Control_EX <= "000000";
 				IS_Branch  <= '0';
 				IS_Jalr    <= '0';
@@ -220,7 +220,7 @@ begin
 				ID_Flush   <= '0';
 				EX_Flush   <= '0';
 				Control_WB <= "00";
-				Control_M  <= "00000";
+				Control_M  <= "000";
 				Control_EX <= "000000";
 				IS_Branch  <= '0';
 				IS_Jalr    <= '0';
@@ -232,7 +232,7 @@ begin
 				ID_Flush   <= '0';
 				EX_Flush   <= '0';
 				Control_WB <= "00";
-				Control_M  <= "00000";
+				Control_M  <= "000";
 				Control_EX <= "000000";
 				IS_Branch  <= '0';
 				IS_Jalr    <= '0';
