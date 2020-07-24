@@ -13,8 +13,10 @@ src_path = join(dirname(__file__), ".")
 demo_lib = ui.add_library("demo_lib")
 
 # Add here declaration of rtl needed for test
+demo_lib.add_source_files(join(src_path, "part.vhd"))
 demo_lib.add_source_files(join(src_path, "ALU.vhd"))
 demo_lib.add_source_files(join(src_path, "ALU_control.vhd"))
+demo_lib.add_source_files(join(src_path, "execute.vhd"))
 
 # Add here declaration of testbench needed for test
 demo_lib.add_source_files(join(src_path, "ALU_control_tb.vhd"))
