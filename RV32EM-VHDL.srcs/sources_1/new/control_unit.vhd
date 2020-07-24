@@ -1,6 +1,8 @@
+
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
+
 
 entity control_unit is
 	Port (
@@ -110,11 +112,11 @@ begin
 				Exception <= '0';
 				Jump      <= '1';
 				IF_Flush  <= '1';
-				ID_Flush  <= ;
-				EX_Flush  <= ;
-				WB        <= ;
-				M         <= ;
-				EX        <= ;
+				ID_Flush  <= '0'; --TODO comfirmer cette valeur
+				EX_Flush  <= '0'; --TODO comfirmer cette valeur 
+				WB        <= "00"; --TODO comfirmer cette valeur
+				M         <= "00"; --TODO comfirmer cette valeur
+				EX        <= "000000"; --TODO comfirmer cette valeur
 				IS_Branch <= '1';
 				IS_Jalr   <= '0';
 			end if;
@@ -122,12 +124,12 @@ begin
 			if (Funct3 = "000" or Funct3 = "001" or Funct3 = "010") then
 				Exception <= '0';
 				Jump      <= '0';
-				IF_Flush  <= ;
-				ID_Flush  <= ;
-				EX_Flush  <= ;
-				WB        <= ;
-				M         <= ;
-				EX        <= ;
+				IF_Flush  <= '0'; --TODO comfirmer cette valeur
+				ID_Flush  <= '0'; --TODO comfirmer cette valeur
+				EX_Flush  <= '0'; --TODO comfirmer cette valeur
+				WB        <= "00"; --TODO comfirmer cette valeur
+				M         <= "00"; --TODO comfirmer cette valeur
+				EX        <= "000000"; --TODO comfirmer cette valeur
 				IS_Branch <= '0';
 				IS_Jalr   <= '0';
 			else
@@ -168,12 +170,12 @@ begin
 			else
 				Exception <= '0';
 				Jump      <= '0';
-				IF_Flush  <= ;
-				ID_Flush  <= ;
-				EX_Flush  <= ;
-				WB        <= ;
-				M         <= ;
-				EX        <= ;
+				IF_Flush  <= '0'; --TODO comfirmer cette valeur
+				ID_Flush  <= '0'; --TODO comfirmer cette valeur
+				EX_Flush  <= '0'; --TODO comfirmer cette valeur
+				WB        <= "00"; --TODO comfirmer cette valeur
+				M         <= "00"; --TODO comfirmer cette valeur
+				EX        <= "000000"; --TODO comfirmer cette valeur
 				IS_Branch <= '0';
 				IS_Jalr   <= '0';
 			end if;

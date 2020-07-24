@@ -129,6 +129,36 @@ package part is
 		);
 	end component Register_Memory;
 
+	component control_unit is
+		port (
+			Funct3    : in  std_logic_vector(2 downto 0);
+			Opcode    : in  std_logic_vector(6 downto 0);
+			Exception : out std_logic;
+			Jump      : out std_logic;
+			IF_Flush  : out std_logic;
+			ID_Flush  : out std_logic;
+			EX_Flush  : out std_logic;
+			WB        : out std_logic_vector(1 downto 0);
+			M         : out std_logic_vector(1 downto 0);
+			EX        : out std_logic_vector(5 downto 0);
+			IS_Branch : out std_logic;
+			IS_Jalr   : out std_logic
+		);
+	end component control_unit;	
+
+	component Hazard_detection_unit is
+		port (
+			IF_Instruction_RS1 : in  std_logic_vector(4 downto 0);
+			IF_Instruction_RS2 : in  std_logic_vector(4 downto 0);
+			ID_Instruction_RD  : in  std_logic_vector(4 downto 0);
+			EX_Instruction_RD  : in  std_logic_vector(4 downto 0);
+			ID_MemRead         : in  std_logic;
+			EX_RegWrite        : in  std_logic;
+			IF_Stall           : out std_logic;
+			ID_Stall           : out std_logic
+		);
+	end component Hazard_detection_unit;
+
 	component data_memory is
 		generic (
 			address_size : integer;
@@ -144,4 +174,5 @@ package part is
 			read_data  : out std_logic_vector(data_size-1 downto 0)
 		);
 	end component data_memory;
+		
 end package part;

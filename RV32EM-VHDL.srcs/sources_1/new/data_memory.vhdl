@@ -9,12 +9,12 @@ entity data_memory is
 		memory_size  : integer := 4096
 	);
 	Port (
-		clk          : in  std_logic;
-		MemRead      : in  std_logic;
-		MemWrite     : in  std_logic;
-		address      : in  std_logic_vector(address_size-1 downto 0);
-		write_data   : in  std_logic_vector(data_size-1 downto 0);
-		read_data    : out std_logic_vector(data_size-1 downto 0)
+		clk        : in  std_logic;
+		MemRead    : in  std_logic;
+		MemWrite   : in  std_logic;
+		address    : in  std_logic_vector(address_size-1 downto 0);
+		write_data : in  std_logic_vector(data_size-1 downto 0);
+		read_data  : out std_logic_vector(data_size-1 downto 0)
 	);
 end data_memory;
 
@@ -23,17 +23,18 @@ architecture Behavioral of data_memory is
 	signal data_ram : ram_type;
 
 begin
+
+
+	read_data <= data_ram(to_integer(unsigned(address)));
+
 	process(clk)
 	begin
 		if rising_edge(clk) then
-			if (MemRead = '1') then
-				if (MemWrite = '1') then
-					data_ram(to_integer(unsigned(address))) <= write_data;		
-				else
-					read_data <= data_ram(to_integer(unsigned(address)));
-				end if;
+			if (MemWrite = '1') then
+				data_ram(to_integer(unsigned(address))) <= write_data;
 			end if;
 		end if;
 	end process;
+
 
 end Behavioral;
