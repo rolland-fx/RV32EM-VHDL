@@ -87,9 +87,9 @@ begin
 			else
 				Exception <= '1';
 				Jump      <= '0';
-				IF_Flush  <= '0';
-				ID_Flush  <= '0';
-				EX_Flush  <= '0';
+				IF_Flush  <= '1';
+				ID_Flush  <= '1';
+				EX_Flush  <= '1';
 				WB        <= "00";
 				M         <= "00";
 				EX        <= "000000";
@@ -100,9 +100,9 @@ begin
 			if (Funct3 = "010" or Funct3 = "011") then
 				Exception <= '1';
 				Jump      <= '0';
-				IF_Flush  <= '0';
-				ID_Flush  <= '0';
-				EX_Flush  <= '0';
+				IF_Flush  <= '1';
+				ID_Flush  <= '1';
+				EX_Flush  <= '1';
 				WB        <= "00";
 				M         <= "00";
 				EX        <= "000000";
@@ -111,12 +111,12 @@ begin
 			else
 				Exception <= '0';
 				Jump      <= '1';
-				IF_Flush  <= '1';
-				ID_Flush  <= '0'; --TODO comfirmer cette valeur
-				EX_Flush  <= '0'; --TODO comfirmer cette valeur 
-				WB        <= "00"; --TODO comfirmer cette valeur
-				M         <= "00"; --TODO comfirmer cette valeur
-				EX        <= "000000"; --TODO comfirmer cette valeur
+				IF_Flush  <= '0'; --TODO comfirmer cette valeur
+				ID_Flush  <= '0';
+				EX_Flush  <= '0';
+				WB        <= "00";
+				M         <= "00";
+				EX        <= "010000";
 				IS_Branch <= '1';
 				IS_Jalr   <= '0';
 			end if;
@@ -124,20 +124,20 @@ begin
 			if (Funct3 = "000" or Funct3 = "001" or Funct3 = "010") then
 				Exception <= '0';
 				Jump      <= '0';
-				IF_Flush  <= '0'; --TODO comfirmer cette valeur
-				ID_Flush  <= '0'; --TODO comfirmer cette valeur
-				EX_Flush  <= '0'; --TODO comfirmer cette valeur
-				WB        <= "00"; --TODO comfirmer cette valeur
+				IF_Flush  <= '0';
+				ID_Flush  <= '0';
+				EX_Flush  <= '0';
+				WB        <= "01";
 				M         <= "00"; --TODO comfirmer cette valeur
-				EX        <= "000000"; --TODO comfirmer cette valeur
+				EX        <= "000001";
 				IS_Branch <= '0';
 				IS_Jalr   <= '0';
 			else
 				Exception <= '1';
 				Jump      <= '0';
-				IF_Flush  <= '0';
-				ID_Flush  <= '0';
-				EX_Flush  <= '0';
+				IF_Flush  <= '1';
+				ID_Flush  <= '1';
+				EX_Flush  <= '1';
 				WB        <= "00";
 				M         <= "00";
 				EX        <= "000000";
@@ -159,9 +159,9 @@ begin
 			if (Funct3 = "011" or Funct3 = "110" or Funct3 = "111") then
 				Exception <= '1';
 				Jump      <= '0';
-				IF_Flush  <= '0';
-				ID_Flush  <= '0';
-				EX_Flush  <= '0';
+				IF_Flush  <= '1';
+				ID_Flush  <= '1';
+				EX_Flush  <= '1';
 				WB        <= "00";
 				M         <= "00";
 				EX        <= "000000";
@@ -170,12 +170,12 @@ begin
 			else
 				Exception <= '0';
 				Jump      <= '0';
-				IF_Flush  <= '0'; --TODO comfirmer cette valeur
-				ID_Flush  <= '0'; --TODO comfirmer cette valeur
-				EX_Flush  <= '0'; --TODO comfirmer cette valeur
-				WB        <= "00"; --TODO comfirmer cette valeur
+				IF_Flush  <= '0';
+				ID_Flush  <= '0';
+				EX_Flush  <= '0';
+				WB        <= "11";
 				M         <= "00"; --TODO comfirmer cette valeur
-				EX        <= "000000"; --TODO comfirmer cette valeur
+				EX        <= "000001";
 				IS_Branch <= '0';
 				IS_Jalr   <= '0';
 			end if;
@@ -194,9 +194,9 @@ begin
 			else
 				Exception <= '1';
 				Jump      <= '0';
-				IF_Flush  <= '0';
-				ID_Flush  <= '0';
-				EX_Flush  <= '0';
+				IF_Flush  <= '1';
+				ID_Flush  <= '1';
+				EX_Flush  <= '1';
 				WB        <= "00";
 				M         <= "00";
 				EX        <= "000000";
@@ -218,9 +218,9 @@ begin
 			else
 				Exception <= '1';
 				Jump      <= '0';
-				IF_Flush  <= '0';
-				ID_Flush  <= '0';
-				EX_Flush  <= '0';
+				IF_Flush  <= '1';
+				ID_Flush  <= '1';
+				EX_Flush  <= '1';
 				WB        <= "00";
 				M         <= "00";
 				EX        <= "000000";
@@ -230,9 +230,9 @@ begin
 		when others =>
 			Exception <= '1';
 			Jump      <= '0';
-			IF_Flush  <= '0';
-			ID_Flush  <= '0';
-			EX_Flush  <= '0';
+			IF_Flush  <= '1';
+			ID_Flush  <= '1';
+			EX_Flush  <= '1';
 			WB        <= "00";
 			M         <= "00";
 			EX        <= "000000";
