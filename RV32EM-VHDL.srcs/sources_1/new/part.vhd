@@ -3,10 +3,27 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 package part is
 
+
+    COMPONENT Branch_Compare
+      Port(
+        Is_Branch : in std_logic;
+        Funct3    : in std_logic_vector(2 downto 0);
+        R_Data_1  : in std_logic_vector(31 downto 0);
+        R_Data_2  : in std_logic_vector(31 downto 0);
+    
+        Branch_Cmp_Out : out std_logic
+      );
+    END COMPONENT;
+    
     COMPONENT Instruction_Memory
+	generic (
+		address_size : integer;
+		data_size    : integer;
+		memory_size  : integer 
+	);
       PORT (
-        a : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
-        spo : OUT STD_LOGIC_VECTOR(31 DOWNTO 0)
+        PC_in : IN STD_LOGIC_VECTOR(address_size-1 DOWNTO 0);
+        Instr_OUT : OUT STD_LOGIC_VECTOR(data_size-1 DOWNTO 0)
       );
     END COMPONENT;
     
@@ -114,9 +131,9 @@ package part is
 
 	component data_memory is
 		generic (
-			address_size : integer := 12;
-			data_size    : integer := 32;
-			memory_size  : integer := 4096
+			address_size : integer;
+			data_size    : integer;
+			memory_size  : integer
 		);
 		port (
 			clk        : in  std_logic;

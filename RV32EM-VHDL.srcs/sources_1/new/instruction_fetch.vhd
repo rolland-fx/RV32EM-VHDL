@@ -47,9 +47,14 @@ architecture Behavioral of instruction_fetch is
 
 begin
 Instr_Mem : Instruction_Memory
-  PORT MAP (
-    a => PC_in(7 downto 0),
-    spo => INSTR_out
-  );
+      		generic map (
+			address_size => 32,
+			data_size    => 32,
+			memory_size  => 13
+		)
+		port map (
+			PC_in    => PC_in,
+			INSTR_out   => INSTR_out
+		);
 
 end Behavioral;
