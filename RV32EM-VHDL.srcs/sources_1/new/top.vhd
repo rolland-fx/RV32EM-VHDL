@@ -1,10 +1,14 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use ieee.numeric_std.all;
 
 library work;
 use work.part.all;
 
 entity Main is
+	generic(
+		exc_addr : integer := 0
+	);
 	Port (
 		i_clk : in STD_LOGIC
 	);
@@ -114,8 +118,20 @@ architecture Behavioral of Main is
 
 	-- OTHER SIGNAL
 	signal control_mux_select : std_logic;
+	signal BranchCmp          : std_logic;
+	signal PCsrc              : std_logic_vector(1 downto 0);
+	signal jump_addr          : std_logic_vector(31 downto 0);
 
 begin
+
+	PCsrc <= (BranchCmp and control_Jump) & control_Exception;
+
+	with PCsrc select
+	s_i_PC <=
+		std_logic_vector(unsigned(s_o_PC) + 4)  when "00",
+		std_logic_vector(to_unsigned(exc_addr, s_i_PC'length)) when "01",
+		jump_addr                               when "10",
+		(others => '0')                         when others;
 
 	s_c_PC_flush <= hazard_ID_stall or hazard_IF_stall;
 
@@ -226,7 +242,7 @@ begin
 			IMM_out                    => s_i_ID_IMM,
 			instr_30_25_14_to_12_3_out => s_i_ID_instr_30_25_14_to_12_3,
 			instr_11_to_7_out          => s_i_ID_instr_11_to_7,
-			jump_out                   => open -- TODO : diriger vers IF_stage
+			jump_out                   => jump_addr
 		);
 
 	with control_EX_flush select
@@ -293,15 +309,24 @@ begin
 			IS_Jalr   => control_IsJalr
 		);
 
-Hazard_detection_unit_1 : Hazard_detection_unit
-	port map (
-		IF_Instruction_RS1 => s_o_IF_instr(19 downto 15),
-		IF_Instruction_RS2 => s_o_IF_instr(24 downto 20),
-		ID_Instruction_RD  => s_o_ID_instr_11_to_7,
-		EX_Instruction_RD  => s_o_EX_instr_11_to_7,
-		ID_MemRead         => s_o_ID_M(1),
-		EX_RegWrite        => s_o_EX_M(0),
-		IF_Stall           => hazard_IF_stall,
-		ID_Stall           => hazard_ID_stall
-	);
+	Hazard_detection_unit_1 : Hazard_detection_unit
+		port map (
+			IF_Instruction_RS1 => s_o_IF_instr(19 downto 15),
+			IF_Instruction_RS2 => s_o_IF_instr(24 downto 20),
+			ID_Instruction_RD  => s_o_ID_instr_11_to_7,
+			EX_Instruction_RD  => s_o_EX_instr_11_to_7,
+			ID_MemRead         => s_o_ID_M(1),
+			EX_RegWrite        => s_o_EX_M(0),
+			IF_Stall           => hazard_IF_stall,
+			ID_Stall           => hazard_ID_stall
+		);
+
+	Branch_Compare_1 : Branch_Compare
+		port map (
+			Is_Branch      => contorl_IsBranch,
+			Funct3         => s_o_IF_instr(14 downto 12),
+			R_Data_1       => s_i_ID_RD1,
+			R_Data_2       => s_i_ID_RD2,
+			Branch_Cmp_Out => BranchCmp
+		);
 end Behavioral;
