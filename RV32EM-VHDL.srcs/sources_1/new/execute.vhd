@@ -70,12 +70,12 @@ begin
 
 	RD2_out <= RD2_in;
 
-	--DUT_ALU_control : ALU_control
-	--	port map (
-	--		ALUOp                  => EX(5 downto 4),
-	--		instr_30_25_14_to_12_3 => instr_30_25_14_to_12_3_in,
-	----------------------------------------------------------------------		ALUControl             => ALUcontrol_sig
-		--);
+	DUT_ALU_control : ALU_control
+		port map (
+			ALUOp                  => EX(5 downto 4),
+			instr_30_25_14_to_12_3 => instr_30_25_14_to_12_3_in,
+			ALUControl             => ALUcontrol_sig
+		);
 
 	DUT_ALU : ALU
 		port map (

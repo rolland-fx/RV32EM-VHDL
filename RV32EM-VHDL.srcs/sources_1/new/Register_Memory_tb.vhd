@@ -4,9 +4,15 @@ use ieee.numeric_std.all;
 use std.textio.all;
 use ieee.std_logic_textio.all;
 
+library vunit_lib;
+context vunit_lib.vunit_context;
+
+library demo_lib;
+
 -----------------------------------------------------------
 
 entity Register_Memory_tb is
+generic (runner_cfg : string);
 end entity Register_Memory_tb;
 
 -----------------------------------------------------------
@@ -47,15 +53,28 @@ begin
 	-----------------------------------------------------------
 	main : process
 	begin
-		R_Reg_1 <= X"000000F0";
-		R_Reg_2 <= X"0000000F";
+	test_runner_setup(runner, runner_cfg);
+
+	wait for 5 ns;
+		R_Reg_1 <= X"00000125";
+		R_Reg_2 <= X"00000125";
 		we      <= '1';
 		W_Reg   <= X"00000125";
 		W_Data  <= X"00002500";
 		wait for 10 ns;
-		we      <= '0';
+		check_equal(R_Data_1, std_logic_vector'(x"00002500"));
+		check_equal(R_Data_2, std_logic_vector'(x"00002500"));
+
 		R_Reg_1 <= X"00000125";
-		wait;
+		R_Reg_2 <= X"00000125";
+		we      <= '0';
+		W_Reg   <= X"00000125";
+		W_Data  <= X"000025ff";
+		wait for 10 ns;
+		check_equal(R_Data_1, std_logic_vector'(x"00002500"));
+		check_equal(R_Data_2, std_logic_vector'(x"00002500"));
+
+		test_runner_cleanup(runner);
 	end process;
 	-----------------------------------------------------------
 	-- Entity Under Test
