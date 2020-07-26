@@ -6,7 +6,7 @@
 -- Author      : User Name <user.email@user.company.com>
 -- Company     : User Company Name
 -- Created     : Mon Jul 13 11:47:11 2020
--- Last update : Mon Jul 13 12:22:05 2020
+-- Last update : Sat Jul 25 20:23:51 2020
 -- Platform    : Default Part Number
 -- Standard    : <VHDL-2008 | VHDL-2002 | VHDL-1993 | VHDL-1987>
 --------------------------------------------------------------------------------
@@ -71,6 +71,8 @@ begin
 	main : process
 	begin
 		test_runner_setup(runner, runner_cfg);
+
+		wait for 5 ns;
 
 		MemRead <= '1';
 		MemWrite <= '1';

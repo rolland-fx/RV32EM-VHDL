@@ -16,13 +16,16 @@ demo_lib = ui.add_library("demo_lib")
 demo_lib.add_source_files(join(src_path, "part.vhd"))
 demo_lib.add_source_files(join(src_path, "ALU.vhd"))
 demo_lib.add_source_files(join(src_path, "ALU_control.vhd"))
-demo_lib.add_source_files(join(src_path, "execute.vhd"))
 demo_lib.add_source_files(join(src_path, "imm_gen.vhd"))
+demo_lib.add_source_files(join(src_path, "data_memory.vhd"))
+#demo_lib.add_source_files(join(src_path, "execute.vhd"))
 
 # Add here declaration of testbench needed for test
 demo_lib.add_source_files(join(src_path, "ALU_control_tb.vhd"))
 demo_lib.add_source_files(join(src_path, "ALU_tb.vhd"))
 demo_lib.add_source_files(join(src_path, "imm_gen_tb.vhd"))
+demo_lib.add_source_files(join(src_path, "data_memory_tb.vhd"))
+#demo_lib.add_source_files(join(src_path, "execute_tb.vhd"))
 
 
 ui.set_compile_option("ghdl.flags", ["-frelaxed-rules","--no-vital-checks"])
