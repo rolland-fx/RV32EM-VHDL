@@ -6,7 +6,7 @@
 -- Author      : User Name <user.email@user.company.com>
 -- Company     : User Company Name
 -- Created     : Mon Jul 13 11:47:11 2020
--- Last update : Sat Jul 25 20:23:51 2020
+-- Last update : Mon Jul 27 16:20:03 2020
 -- Platform    : Default Part Number
 -- Standard    : <VHDL-2008 | VHDL-2002 | VHDL-1993 | VHDL-1987>
 --------------------------------------------------------------------------------
@@ -74,7 +74,7 @@ begin
 
 		wait for 5 ns;
 
-		MemRead <= '1';
+		MemRead <= '0';
 		MemWrite <= '1';
 		address <= "100010010100"; --adresse : 2196
 		write_data <= X"05F13F87"; --data : 99696519
@@ -86,6 +86,19 @@ begin
 		write_data <= X"00010F07"; --data : 69383
 		wait for 10 ns;
 		check_equal(read_data,99696519,"adresse(2196) : good data");
+
+		MemRead <= '0';
+		MemWrite <= '1';
+		address <= "100010010101"; --adresse : 2197
+		write_data <= X"00010F07"; --data : 69383
+		wait for 10 ns;
+
+		MemRead <= '1';
+		MemWrite <= '0';
+		address <= "100010010101"; --adresse : 2197
+		write_data <= X"01010F07"; --data : 16846599
+		wait for 10 ns;
+		check_equal(read_data,69383,"adresse(2197) : good data");
 
 		test_runner_cleanup(runner);
 	end process main;

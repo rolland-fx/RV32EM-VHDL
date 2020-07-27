@@ -24,14 +24,13 @@ architecture Behavioral of data_memory is
 
 begin
 
-
-	read_data <= data_ram(to_integer(unsigned(address)));
-
 	process(clk)
 	begin
 		if rising_edge(clk) then
-			if (MemWrite = '1') then
-				data_ram(to_integer(unsigned(address))) <= write_data;
+			if ((MemRead = '1') and (MemWrite = '0')) then
+				read_data <= data_ram(to_integer(unsigned(address)));
+			elsif ((MemWrite = '1') and (MemRead = '0')) then
+				data_ram(to_integer(unsigned(address))) <= write_data;			
 			end if;
 		end if;
 	end process;

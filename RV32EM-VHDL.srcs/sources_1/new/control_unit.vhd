@@ -111,7 +111,7 @@ begin
 			else
 				Exception <= '0';
 				Jump      <= '1';
-				IF_Flush  <= '0'; --TODO comfirmer cette valeur
+				IF_Flush  <= '0';
 				ID_Flush  <= '0';
 				EX_Flush  <= '0';
 				WB        <= "00";
@@ -128,7 +128,7 @@ begin
 				ID_Flush  <= '0';
 				EX_Flush  <= '0';
 				WB        <= "01";
-				M         <= "00"; --TODO comfirmer cette valeur
+				M         <= "01";
 				EX        <= "000001";
 				IS_Branch <= '0';
 				IS_Jalr   <= '0';
@@ -174,7 +174,7 @@ begin
 				ID_Flush  <= '0';
 				EX_Flush  <= '0';
 				WB        <= "11";
-				M         <= "00"; --TODO comfirmer cette valeur
+				M         <= "10";
 				EX        <= "000001";
 				IS_Branch <= '0';
 				IS_Jalr   <= '0';
