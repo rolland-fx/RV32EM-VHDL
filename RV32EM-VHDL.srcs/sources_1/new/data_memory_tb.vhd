@@ -6,7 +6,7 @@
 -- Author      : User Name <user.email@user.company.com>
 -- Company     : User Company Name
 -- Created     : Mon Jul 13 11:47:11 2020
--- Last update : Mon Jul 27 16:20:03 2020
+-- Last update : Mon Jul 27 18:58:43 2020
 -- Platform    : Default Part Number
 -- Standard    : <VHDL-2008 | VHDL-2002 | VHDL-1993 | VHDL-1987>
 --------------------------------------------------------------------------------
@@ -38,9 +38,9 @@ end entity data_memory_tb;
 architecture testbench of data_memory_tb is
 
 	-- Testbench DUT generics
-	constant address_size : integer := 12;
+	constant address_size : integer := 32;
 	constant data_size    : integer := 32;
-	constant memory_size  : integer := 4096;
+	constant memory_size  : integer := 64;
 
 	-- Testbench DUT ports
 	signal clk        : std_logic;
@@ -76,29 +76,29 @@ begin
 
 		MemRead <= '0';
 		MemWrite <= '1';
-		address <= "100010010100"; --adresse : 2196
+		address <= x"00000036"; --adresse : 54
 		write_data <= X"05F13F87"; --data : 99696519
 		wait for 10 ns;
 
 		MemRead <= '1';
 		MemWrite <= '0';
-		address <= "100010010100"; --adresse : 2196
+		address <= x"00000036"; --adresse : 54
 		write_data <= X"00010F07"; --data : 69383
 		wait for 10 ns;
-		check_equal(read_data,99696519,"adresse(2196) : good data");
+		check_equal(read_data,99696519,"adresse(54) : good data");
 
 		MemRead <= '0';
 		MemWrite <= '1';
-		address <= "100010010101"; --adresse : 2197
+		address <= x"00000037"; --adresse : 55
 		write_data <= X"00010F07"; --data : 69383
 		wait for 10 ns;
 
 		MemRead <= '1';
 		MemWrite <= '0';
-		address <= "100010010101"; --adresse : 2197
+		address <= x"00000037"; --adresse : 55
 		write_data <= X"01010F07"; --data : 16846599
 		wait for 10 ns;
-		check_equal(read_data,69383,"adresse(2197) : good data");
+		check_equal(read_data,69383,"adresse(55) : good data");
 
 		test_runner_cleanup(runner);
 	end process main;
