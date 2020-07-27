@@ -42,5 +42,5 @@ architecture Behavioral of Instruction_Memory is
                                             );
 begin
 
-    Instr_OUT <= Instruction_Rom(to_integer(unsigned(PC_in)));
+    Instr_OUT <= Instruction_Rom(to_integer(shift_right(unsigned(PC_in),2)));
 end Behavioral;

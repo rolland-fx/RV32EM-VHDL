@@ -40,12 +40,12 @@ architecture Behavioral of data_memory is
 
 begin
 
-	read_data <= data_ram(to_integer(unsigned(address)));
+	read_data <= data_ram(to_integer(shift_right(unsigned(address),2)));
     process(clk)
     begin
         if rising_edge(clk) then
             if ((MemWrite = '1') and (MemRead = '0')) then
-                data_ram(to_integer(unsigned(address))) <= write_data;
+                data_ram(to_integer(shift_right(unsigned(address),2))) <= write_data;
             end if;
         end if;
     end process;
