@@ -66,7 +66,7 @@ begin
 		RD2_in          when "00",
 		IMM_in          when "01",
 		x"00000004"     when "10",
-		(others => '0') when others;
+		(others => '1') when others;
 
 	RD2_out <= RD2_in;
 

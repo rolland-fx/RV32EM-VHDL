@@ -6,7 +6,7 @@
 -- Author      : Alexandre Viau <alexandre.viau.2@ens.etsmtl.ca
 -- Company     : École de technologie supérieur
 -- Created     : Sat Jul 25 20:25:41 2020
--- Last update : Sat Jul 25 20:48:14 2020
+-- Last update : Sun Jul 26 16:37:02 2020
 -- Platform    : NùA
 -- Standard    : <VHDL-2008 | VHDL-2002 | VHDL-1993 | VHDL-1987>
 --------------------------------------------------------------------------------
@@ -63,16 +63,18 @@ begin
 	begin
 		test_runner_setup(runner, runner_cfg);
 
-		wait for 5 ns;
+		--wait for 5 ns;
 
 		EX <= "100000";
 		PC_in <=  x"00000000";
-		RD1_in <= x"cccccccc";
-		RD2_in <= x"aaaaaaaa";
+		RD1_in <= x"00000001";
+		RD2_in <= x"00000002";
 		IMM_in <= x"00000000";
 		instr_30_25_14_to_12_3_in <= "000000";
 		wait for 10 ns;
-		--check_equal(ALU_OUT_out, std_logic_vector'(x"66666666"), "Type I ADD failed");
+		check_equal(ALU_OUT_out, std_logic_vector'(x"00000003"), "Type I ADD failed");
+
+		wait for 10 ns;
 
 		test_runner_cleanup(runner);
 	end process main;
