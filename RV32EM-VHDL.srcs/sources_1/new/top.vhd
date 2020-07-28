@@ -6,9 +6,6 @@ library work;
 use work.part.all;
 
 entity Main is
-	generic(
-		exc_addr : integer := 0
-	);
 	Port (
 		i_clk : in STD_LOGIC
 	);
@@ -102,7 +99,6 @@ architecture Behavioral of Main is
 
 	-- Control Unit SIGNAL
 	signal control_Jump      : std_logic;
-	signal control_Exception : std_logic;
 	signal control_IF_Flush  : std_logic;
 	signal control_ID_flush  : std_logic;
 	signal control_EX_flush  : std_logic;
@@ -119,18 +115,17 @@ architecture Behavioral of Main is
 	-- OTHER SIGNAL
 	signal control_mux_select : std_logic;
 	signal BranchCmp          : std_logic;
-	signal PCsrc              : std_logic_vector(1 downto 0);
+	signal PCsrc              : std_logic;
 	signal jump_addr          : std_logic_vector(31 downto 0);
 
 begin
 
-	PCsrc <= (BranchCmp and control_Jump) & control_Exception;
+	PCsrc <= (BranchCmp and control_Jump);
 
 	with PCsrc select
 	s_i_PC <=
-		std_logic_vector(unsigned(s_o_PC) + 4)                 when "00",
-		std_logic_vector(to_unsigned(exc_addr, s_i_PC'length)) when "01",
-		jump_addr                                              when "10",
+		std_logic_vector(unsigned(s_o_PC) + 4)                 when "0",
+		jump_addr                                              when "1",
 		(others => '0')                                        when others;
 
 	s_c_PC_stall <= hazard_ID_stall or hazard_IF_stall;
@@ -294,7 +289,6 @@ begin
 		port map (
 			Funct3    => s_o_IF_instr(14 downto 12),
 			Opcode    => s_o_IF_instr(6 downto 0),
-			Exception => control_Exception,
 			Jump      => control_Jump,
 			IF_Flush  => control_IF_Flush,
 			ID_Flush  => control_ID_flush,

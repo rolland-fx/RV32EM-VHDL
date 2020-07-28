@@ -8,7 +8,6 @@ entity control_unit is
 	Port (
 		Funct3    : in  std_logic_vector(2 downto 0);
 		Opcode    : in  std_logic_vector(6 downto 0);
-		Exception : out std_logic;
 		Jump      : out std_logic;
 		IF_Flush  : out std_logic;
 		ID_Flush  : out std_logic;
@@ -29,7 +28,6 @@ process(Opcode,Funct3)
 begin
 	case Opcode is
 		when "0110011" => --R type
-			Exception <= '0';
 			Jump      <= '0';
 			IF_Flush  <= '0';
 			ID_Flush  <= '0';
@@ -40,7 +38,6 @@ begin
 			IS_Branch <= '0';
 			IS_Jalr   <= '0';
 		when "0110111" => --LUI
-			Exception <= '0';
 			Jump      <= '0';
 			IF_Flush  <= '0';
 			ID_Flush  <= '0';
@@ -51,7 +48,6 @@ begin
 			IS_Branch <= '0';
 			IS_Jalr   <= '0';
 		when "0010111" => --AUIPC
-			Exception <= '0';
 			Jump      <= '0';
 			IF_Flush  <= '0';
 			ID_Flush  <= '0';
@@ -62,7 +58,6 @@ begin
 			IS_Branch <= '0';
 			IS_Jalr   <= '0';
 		when "1101111" => --JAL
-			Exception <= '0';
 			Jump      <= '1';
 			IF_Flush  <= '1';
 			ID_Flush  <= '0';
@@ -74,7 +69,6 @@ begin
 			IS_Jalr   <= '0';
 		when "1100111" => --JALR
 			if (Funct3 = "000") then
-				Exception <= '0';
 				Jump      <= '1';
 				IF_Flush  <= '1';
 				ID_Flush  <= '0';
@@ -85,9 +79,8 @@ begin
 				IS_Branch <= '0';
 				IS_Jalr   <= '1';
 			else
-				Exception <= '1';
 				Jump      <= '0';
-				IF_Flush  <= '1';
+				IF_Flush  <= '0';
 				ID_Flush  <= '1';
 				EX_Flush  <= '1';
 				WB        <= "00";
@@ -98,9 +91,8 @@ begin
 			end if;
 		when "1100011" => --B type
 			if (Funct3 = "010" or Funct3 = "011") then
-				Exception <= '1';
 				Jump      <= '0';
-				IF_Flush  <= '1';
+				IF_Flush  <= '0';
 				ID_Flush  <= '1';
 				EX_Flush  <= '1';
 				WB        <= "00";
@@ -109,7 +101,6 @@ begin
 				IS_Branch <= '0';
 				IS_Jalr   <= '0';
 			else
-				Exception <= '0';
 				Jump      <= '1';
 				IF_Flush  <= '0';
 				ID_Flush  <= '0';
@@ -122,7 +113,6 @@ begin
 			end if;
 		when "0100011" => --S type
 			if (Funct3 = "000" or Funct3 = "001" or Funct3 = "010") then
-				Exception <= '0';
 				Jump      <= '0';
 				IF_Flush  <= '0';
 				ID_Flush  <= '0';
@@ -133,9 +123,8 @@ begin
 				IS_Branch <= '0';
 				IS_Jalr   <= '0';
 			else
-				Exception <= '1';
 				Jump      <= '0';
-				IF_Flush  <= '1';
+				IF_Flush  <= '0';
 				ID_Flush  <= '1';
 				EX_Flush  <= '1';
 				WB        <= "00";
@@ -145,7 +134,6 @@ begin
 				IS_Jalr   <= '0';
 			end if;
 		when "0010011" => --I type
-			Exception <= '0';
 			Jump      <= '0';
 			IF_Flush  <= '0';
 			ID_Flush  <= '0';
@@ -157,9 +145,8 @@ begin
 			IS_Jalr   <= '0';
 		when "0000011" => --LOAD
 			if (Funct3 = "011" or Funct3 = "110" or Funct3 = "111") then
-				Exception <= '1';
 				Jump      <= '0';
-				IF_Flush  <= '1';
+				IF_Flush  <= '0';
 				ID_Flush  <= '1';
 				EX_Flush  <= '1';
 				WB        <= "00";
@@ -168,7 +155,6 @@ begin
 				IS_Branch <= '0';
 				IS_Jalr   <= '0';
 			else
-				Exception <= '0';
 				Jump      <= '0';
 				IF_Flush  <= '0';
 				ID_Flush  <= '0';
@@ -181,7 +167,6 @@ begin
 			end if;
 		when "0001111" => --FENCE
 			if (Funct3 = "000") then
-				Exception <= '0';
 				Jump      <= '0';
 				IF_Flush  <= '0';
 				ID_Flush  <= '0';
@@ -192,9 +177,8 @@ begin
 				IS_Branch <= '0';
 				IS_Jalr   <= '0';
 			else
-				Exception <= '1';
 				Jump      <= '0';
-				IF_Flush  <= '1';
+				IF_Flush  <= '0';
 				ID_Flush  <= '1';
 				EX_Flush  <= '1';
 				WB        <= "00";
@@ -205,7 +189,6 @@ begin
 			end if;
 		when "1110011" => --ECALL/EBREAK
 			if (Funct3 = "000") then
-				Exception <= '0';
 				Jump      <= '0';
 				IF_Flush  <= '0';
 				ID_Flush  <= '0';
@@ -216,9 +199,8 @@ begin
 				IS_Branch <= '0';
 				IS_Jalr   <= '0';
 			else
-				Exception <= '1';
 				Jump      <= '0';
-				IF_Flush  <= '1';
+				IF_Flush  <= '0';
 				ID_Flush  <= '1';
 				EX_Flush  <= '1';
 				WB        <= "00";
@@ -228,7 +210,6 @@ begin
 				IS_Jalr   <= '0';
 			end if;
 		when others =>
-			Exception <= '1';
 			Jump      <= '0';
 			IF_Flush  <= '0';
 			ID_Flush  <= '1';

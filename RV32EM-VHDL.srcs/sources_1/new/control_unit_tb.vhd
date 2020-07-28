@@ -6,7 +6,7 @@
 -- Author      : User Name <user.email@user.company.com>
 -- Company     : User Company Name
 -- Created     : Mon Jul 27 15:41:25 2020
--- Last update : Mon Jul 27 17:20:01 2020
+-- Last update : Mon Jul 27 21:56:52 2020
 -- Platform    : Default Part Number
 -- Standard    : <VHDL-2008 | VHDL-2002 | VHDL-1993 | VHDL-1987>
 --------------------------------------------------------------------------------
@@ -42,7 +42,6 @@ architecture testbench of control_unit_tb is
 	-- Testbench DUT ports
 	signal Funct3    : std_logic_vector(2 downto 0);
 	signal Opcode    : std_logic_vector(6 downto 0);
-	signal Exception : std_logic;
 	signal Jump      : std_logic;
 	signal IF_Flush  : std_logic;
 	signal ID_Flush  : std_logic;
@@ -66,9 +65,8 @@ begin
 		Funct3 <= "001";
 		Opcode <= "1100111";
 		wait for 10 ns; --Invalid instruction
-		check_equal(Exception,std_logic'('1'),"(Invalid instruction) Exception = 1");
 		check_equal(Jump,std_logic'('0'),"(Invalid instruction) Jump = 0");
-		check_equal(IF_Flush,std_logic'('1'),"(Invalid instruction) IF_Flush = 1");
+		check_equal(IF_Flush,std_logic'('0'),"(Invalid instruction) IF_Flush = 0");
 		check_equal(ID_Flush,std_logic'('1'),"(Invalid instruction) ID_Flush = 1");
 		check_equal(EX_Flush,std_logic'('1'),"(Invalid instruction) EX_Flush = 1");
 		check_equal(WB,std_logic_vector'("00"),"(Invalid instruction) WB = 00");
@@ -80,7 +78,6 @@ begin
 		Funct3 <= "000";
 		Opcode <= "0110011";
 		wait for 10 ns; --R type (ADD)
-		check_equal(Exception,std_logic'('0'),"(R type) Exception = 0");
 		check_equal(Jump,std_logic'('0'),"(R type) Jump = 0");
 		check_equal(IF_Flush,std_logic'('0'),"(R type) IF_Flush = 0");
 		check_equal(ID_Flush,std_logic'('0'),"(R type) ID_Flush = 0");
@@ -94,7 +91,6 @@ begin
 		Funct3 <= "000";
 		Opcode <= "1100011";
 		wait for 10 ns; --B type (BEQ)
-		check_equal(Exception,std_logic'('0'),"(B type) Exception = 0");
 		check_equal(Jump,std_logic'('1'),"(B type) Jump = 1");
 		check_equal(IF_Flush,std_logic'('0'),"(B type) IF_Flush = 0");
 		check_equal(ID_Flush,std_logic'('0'),"(B type) ID_Flush = 0");
@@ -108,7 +104,6 @@ begin
 		Funct3 <= "010";
 		Opcode <= "0100011";
 		wait for 10 ns; --S type (SW)
-		check_equal(Exception,std_logic'('0'),"(S type) Exception = 0");
 		check_equal(Jump,std_logic'('0'),"(S type) Jump = 0");
 		check_equal(IF_Flush,std_logic'('0'),"(S type) IF_Flush = 0");
 		check_equal(ID_Flush,std_logic'('0'),"(S type) ID_Flush = 0");
@@ -122,7 +117,6 @@ begin
 		Funct3 <= "010";
 		Opcode <= "0000011";
 		wait for 10 ns; -- Load (LW)
-		check_equal(Exception,std_logic'('0'),"(Load) Exception = 0");
 		check_equal(Jump,std_logic'('0'),"(Load) Jump = 0");
 		check_equal(IF_Flush,std_logic'('0'),"(Load) IF_Flush = 0");
 		check_equal(ID_Flush,std_logic'('0'),"(Load) ID_Flush = 0");
@@ -136,7 +130,6 @@ begin
 		Funct3 <= "000";
 		Opcode <= "0010011";
 		wait for 10 ns; --I type (ADDI)
-		check_equal(Exception,std_logic'('0'),"(I type) Exception = 0");
 		check_equal(Jump,std_logic'('0'),"(I type) Jump = 0");
 		check_equal(IF_Flush,std_logic'('0'),"(I type) IF_Flush = 0");
 		check_equal(ID_Flush,std_logic'('0'),"(I type) ID_Flush = 0");
@@ -150,7 +143,6 @@ begin
 		Funct3 <= "000";
 		Opcode <= "0110111";
 		wait for 10 ns; --LUI
-		check_equal(Exception,std_logic'('0'),"(LUI) Exception = 0");
 		check_equal(Jump,std_logic'('0'),"(LUI) Jump = 0");
 		check_equal(IF_Flush,std_logic'('0'),"(LUI) IF_Flush = 0");
 		check_equal(ID_Flush,std_logic'('0'),"(LUI) ID_Flush = 0");
@@ -164,7 +156,6 @@ begin
 		Funct3 <= "000";
 		Opcode <= "0010111";
 		wait for 10 ns; --AUIPC
-		check_equal(Exception,std_logic'('0'),"(AUIPC) Exception = 0");
 		check_equal(Jump,std_logic'('0'),"(AUIPC) Jump = 0");
 		check_equal(IF_Flush,std_logic'('0'),"(AUIPC) IF_Flush = 0");
 		check_equal(ID_Flush,std_logic'('0'),"(AUIPC) ID_Flush = 0");
@@ -178,7 +169,6 @@ begin
 		Funct3 <= "000";
 		Opcode <= "1101111";
 		wait for 10 ns; --JAL
-		check_equal(Exception,std_logic'('0'),"(JAL) Exception = 0");
 		check_equal(Jump,std_logic'('1'),"(JAL) Jump = 1");
 		check_equal(IF_Flush,std_logic'('1'),"(JAL) IF_Flush = 1");
 		check_equal(ID_Flush,std_logic'('0'),"(JAL) ID_Flush = 0");
@@ -192,7 +182,6 @@ begin
 		Funct3 <= "000";
 		Opcode <= "1100111";
 		wait for 10 ns; --JALR
-		check_equal(Exception,std_logic'('0'),"(JALR) Exception = 0");
 		check_equal(Jump,std_logic'('1'),"(JALR) Jump = 1");
 		check_equal(IF_Flush,std_logic'('1'),"(JALR) IF_Flush = 1");
 		check_equal(ID_Flush,std_logic'('0'),"(JALR) ID_Flush = 0");
@@ -206,7 +195,6 @@ begin
 		Funct3 <= "000";
 		Opcode <= "0001111";
 		wait for 10 ns; --FENCE
-		check_equal(Exception,std_logic'('0'),"(FENCE) Exception = 0");
 		check_equal(Jump,std_logic'('0'),"(FENCE) Jump = 0");
 		check_equal(IF_Flush,std_logic'('0'),"(FENCE) IF_Flush = 0");
 		check_equal(ID_Flush,std_logic'('0'),"(FENCE) ID_Flush = 0");
@@ -220,7 +208,6 @@ begin
 		Funct3 <= "000";
 		Opcode <= "1110011";
 		wait for 10 ns; --ECALL
-		check_equal(Exception,std_logic'('0'),"(ECALL) Exception = 0");
 		check_equal(Jump,std_logic'('0'),"(ECALL) Jump = 0");
 		check_equal(IF_Flush,std_logic'('0'),"(ECALL) IF_Flush = 0");
 		check_equal(ID_Flush,std_logic'('0'),"(ECALL) ID_Flush = 0");
@@ -240,7 +227,6 @@ begin
 		port map (
 			Funct3    => Funct3,
 			Opcode    => Opcode,
-			Exception => Exception,
 			Jump      => Jump,
 			IF_Flush  => IF_Flush,
 			ID_Flush  => ID_Flush,
