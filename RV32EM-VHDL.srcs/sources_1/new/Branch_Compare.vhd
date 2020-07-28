@@ -40,6 +40,10 @@ begin
     IsBGEU when "111",
     '0'    when others;
 
-  Branch_Cmp_Out <= Is_Branch AND Branch_True;
+  with Is_Branch select
+  Branch_Cmp_Out <=
+    '1'             when '0',
+    Branch_True     when '1',
+    '0' when others;
 
 end Behavioral;

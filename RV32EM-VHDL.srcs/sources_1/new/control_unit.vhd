@@ -230,7 +230,7 @@ begin
 		when others =>
 			Exception <= '1';
 			Jump      <= '0';
-			IF_Flush  <= '1';
+			IF_Flush  <= '0';
 			ID_Flush  <= '1';
 			EX_Flush  <= '1';
 			WB        <= "00";

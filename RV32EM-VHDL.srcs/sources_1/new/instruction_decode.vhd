@@ -6,7 +6,7 @@
 -- Author      : User Name <user.email@user.company.com>
 -- Company     : User Company Name
 -- Created     : Tue Jun 30 18:14:47 2020
--- Last update : Fri Jul 17 11:15:52 2020
+-- Last update : Mon Jul 27 19:33:54 2020
 -- Platform    : Default Part Number
 -- Standard    : <VHDL-2008 | VHDL-2002 | VHDL-1993 | VHDL-1987>
 --------------------------------------------------------------------------------
@@ -69,7 +69,7 @@ begin
 	branch_jump <= std_logic_vector(unsigned(PC_in) + shift_left(unsigned(imm), 1));
 	jalr_jump   <= std_logic_vector(unsigned(imm) + unsigned(RD1));
 
-	Register_Memory_1 : entity work.Register_Memory
+	Register_Memory_1 : Register_Memory
 		generic map (
 			address_width => 5,
 			data_width    => 32,
@@ -86,13 +86,13 @@ begin
 			R_Data_2 => RD2
 		);
 
-	imm_gen_1 : entity work.imm_gen
+	imm_gen_1 : imm_gen
 		port map (
 			instruction => instr_in,
 			imm         => imm
 		);
 		
-    Branch_Compare : entity work.Branch_Compare
+    Branch_Compare_1 : Branch_Compare
 		port map (			
 	        Is_Branch => isBRANCH,
             Funct3 => instr_in(14 downto 12),

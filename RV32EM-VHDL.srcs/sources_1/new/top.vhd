@@ -23,7 +23,7 @@ architecture Behavioral of Main is
 	-- OUTPUT OF PC REGISTER
 	signal s_o_PC : std_logic_vector(31 downto 0);
 	-- MANAG of PC REGISTER
-	signal s_c_PC_flush : std_logic;
+	signal s_c_PC_stall : std_logic;
 
 	--------IF/ID STAGE ----------
 	-- ENTRY of IF/ID pipeline
@@ -128,30 +128,27 @@ begin
 
 	with PCsrc select
 	s_i_PC <=
-		std_logic_vector(unsigned(s_o_PC) + 4)  when "00",
+		std_logic_vector(unsigned(s_o_PC) + 4)                 when "00",
 		std_logic_vector(to_unsigned(exc_addr, s_i_PC'length)) when "01",
-		jump_addr                               when "10",
-		(others => '0')                         when others;
+		jump_addr                                              when "10",
+		(others => '0')                                        when others;
 
-	s_c_PC_flush <= hazard_ID_stall or hazard_IF_stall;
+	s_c_PC_stall <= hazard_ID_stall or hazard_IF_stall;
 
-	MainControl_PC : Process(i_clk, s_c_PC_flush) is
+	MainControl_PC : Process(i_clk) is
 	begin
-		if rising_edge(i_clk) then
-			if s_c_PC_flush = '0' then
-				s_o_PC <= s_i_PC;
-			else
-				s_o_PC <= (others => '0');
-			end if;
+		if rising_edge(i_clk) and s_c_PC_stall = '0' then
+			s_o_PC <= s_i_PC;
 		end if;
 	end process;
 
-	s_c_IF_flush <= hazard_ID_stall or hazard_IF_stall;
+	s_c_IF_stall <= hazard_ID_stall or hazard_IF_stall;
+	s_c_IF_flush <= control_IF_Flush;
 
-	MainControl_IF : Process(i_clk,s_c_IF_flush) is -- IF/ID
+	MainControl_IF : Process(i_clk) is -- IF/ID
 	begin
-		if rising_edge(i_clk) then     -- on rising clock edge
-			if s_c_IF_stall = '0' then -- run
+		if rising_edge(i_clk) and s_c_IF_stall = '0' then -- on rising clock edge
+			if s_c_IF_flush = '0' then                    -- run
 				s_o_IF_PC    <= s_i_IF_PC;
 				s_o_IF_instr <= s_i_IF_instr;
 			else
@@ -203,7 +200,7 @@ begin
 		end if;
 	end process;
 
-	s_i_IF_PC <= s_o_ID_PC;
+	s_i_IF_PC <= s_o_PC;
 
 	IF_stage : instruction_fetch
 		port map (

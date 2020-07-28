@@ -1,12 +1,12 @@
 --------------------------------------------------------------------------------
--- Title       : Instruction memory testbench
+-- Title       : <Title Block>
 -- Project     : RV32EM-VHDL
 --------------------------------------------------------------------------------
--- File        : Instruction_Memory_tb.vhd
+-- File        : Main_tb.vhd
 -- Author      : Alexandre Viau <alexandre.viau.2@ens.etsmtl.ca
 -- Company     : École de technologie supérieur
--- Created     : Sat Jul 25 20:47:29 2020
--- Last update : Mon Jul 27 19:15:43 2020
+-- Created     : Mon Jul 27 19:05:12 2020
+-- Last update : Mon Jul 27 20:13:38 2020
 -- Platform    : NùA
 -- Standard    : <VHDL-2008 | VHDL-2002 | VHDL-1993 | VHDL-1987>
 --------------------------------------------------------------------------------
@@ -26,22 +26,21 @@ library demo_lib;
 
 -----------------------------------------------------------
 
-entity Instruction_Memory_tb is
+entity Main_tb is
+
 	generic (runner_cfg : string);
-end entity Instruction_Memory_tb;
+
+end entity Main_tb;
 
 -----------------------------------------------------------
 
-architecture testbench of Instruction_Memory_tb is
+architecture testbench of Main_tb is
 
 	-- Testbench DUT generics
-	constant address_size : integer := 32;
-	constant data_size    : integer := 32;
-	constant memory_size  : integer := 13;
+	constant exc_addr : integer := 0;
 
 	-- Testbench DUT ports
-	signal PC_in     : STD_LOGIC_VECTOR(address_size-1 DOWNTO 0);
-	signal Instr_OUT : STD_LOGIC_VECTOR(data_size-1 DOWNTO 0);
+	signal clk : STD_LOGIC;
 
 	-- Other constants
 	constant C_CLK_PERIOD : real := 10.0e-9; -- NS
@@ -50,6 +49,13 @@ begin
 	-----------------------------------------------------------
 	-- Clocks and Reset
 	-----------------------------------------------------------
+	CLK_GEN : process
+	begin
+		clk <= '1';
+		wait for C_CLK_PERIOD / 2.0 * (1 SEC);
+		clk <= '0';
+		wait for C_CLK_PERIOD / 2.0 * (1 SEC);
+	end process CLK_GEN;
 
 	-----------------------------------------------------------
 	-- Testbench Stimulus
@@ -59,15 +65,7 @@ begin
 	begin
 		test_runner_setup(runner, runner_cfg);
 
-		wait for 5 ns;
-
-		PC_in <= x"00000000";
-		wait for 10 ns;
-		check_equal(Instr_OUT, std_logic_vector'(x"00400597"));
-
-		PC_in <= x"00000004";
-		wait for 10 ns;
-		check_equal(Instr_OUT, std_logic_vector'(x"00058593"));
+		wait for 500000 ns;
 
 		test_runner_cleanup(runner);
 	end process;
@@ -75,15 +73,12 @@ begin
 	-----------------------------------------------------------
 	-- Entity Under Test
 	-----------------------------------------------------------
-	DUT : entity work.Instruction_Memory
+	DUT : entity work.Main
 		generic map (
-			address_size => address_size,
-			data_size    => data_size,
-			memory_size  => memory_size
+			exc_addr => exc_addr
 		)
 		port map (
-			PC_in     => PC_in,
-			Instr_OUT => Instr_OUT
+			i_clk => clk
 		);
 
 end architecture testbench;

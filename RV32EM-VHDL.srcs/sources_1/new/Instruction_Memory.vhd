@@ -24,9 +24,9 @@ entity Instruction_Memory is
 end Instruction_Memory;
 
 architecture Behavioral of Instruction_Memory is
-	type Bram_type is array(memory_size-1 downto 0) of std_logic_vector(data_size-1 downto 0);
+	type Bram_type is array(0 to memory_size-1) of std_logic_vector(data_size-1 downto 0);
 	signal Instruction_Rom : Bram_type := (
-                                            x"00400597",
+                                            x"00000597",
                                             x"00058593",
                                             x"00c000ef",
                                             x"00050093",
