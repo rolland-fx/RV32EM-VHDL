@@ -27,6 +27,7 @@ demo_lib.add_source_files(join(src_path, "Instruction_fetch.vhd"))
 demo_lib.add_source_files(join(src_path, "Instruction_Memory.vhd"))
 demo_lib.add_source_files(join(src_path, "memory_access.vhd"))
 demo_lib.add_source_files(join(src_path, "Register_Memory.vhd"))
+demo_lib.add_source_files(join(src_path, "write_back.vhd"))
 demo_lib.add_source_files(join(src_path, "top.vhd"))
 
 # Add here declaration of testbench needed for test

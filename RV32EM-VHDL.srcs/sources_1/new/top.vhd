@@ -18,7 +18,7 @@ architecture Behavioral of Main is
 	-- ENTRY OF PC REGISTER
 	signal s_i_PC : std_logic_vector(31 downto 0);
 	-- OUTPUT OF PC REGISTER
-	signal s_o_PC : std_logic_vector(31 downto 0);
+	signal s_o_PC : std_logic_vector(31 downto 0) := x"00000000";
 	-- MANAG of PC REGISTER
 	signal s_c_PC_stall : std_logic;
 
@@ -98,15 +98,15 @@ architecture Behavioral of Main is
 	signal WB_sig        : std_logic_vector(31 downto 0);
 
 	-- Control Unit SIGNAL
-	signal control_Jump      : std_logic;
-	signal control_IF_Flush  : std_logic;
-	signal control_ID_flush  : std_logic;
-	signal control_EX_flush  : std_logic;
-	signal control_WB        : std_logic_vector(1 downto 0);
-	signal control_M         : std_logic_vector(1 downto 0);
-	signal control_EX        : std_logic_vector(5 downto 0);
-	signal contorl_IsBranch  : std_logic;
-	signal control_IsJalr    : std_logic;
+	signal control_Jump     : std_logic;
+	signal control_IF_Flush : std_logic;
+	signal control_ID_flush : std_logic;
+	signal control_EX_flush : std_logic;
+	signal control_WB       : std_logic_vector(1 downto 0);
+	signal control_M        : std_logic_vector(1 downto 0);
+	signal control_EX       : std_logic_vector(5 downto 0);
+	signal contorl_IsBranch : std_logic;
+	signal control_IsJalr   : std_logic;
 
 	-- Hazard detection unit signal
 	signal hazard_IF_stall : std_logic;
@@ -124,9 +124,9 @@ begin
 
 	with PCsrc select
 	s_i_PC <=
-		std_logic_vector(unsigned(s_o_PC) + 4)                 when "0",
-		jump_addr                                              when "1",
-		(others => '0')                                        when others;
+		std_logic_vector(unsigned(s_o_PC) + 4) when '0',
+		jump_addr                              when '1',
+		(others => '0')                        when others;
 
 	s_c_PC_stall <= hazard_ID_stall or hazard_IF_stall;
 
@@ -155,43 +155,37 @@ begin
 
 	MainControl_ID : Process(i_clk) is -- ID/EX
 	begin
-		if rising_edge(i_clk) then     -- on rising clock edge
-			if s_c_ID_stall = '0' then -- run
-				s_o_ID_PC                     <= s_i_ID_PC;
-				s_o_ID_RD1                    <= s_i_ID_RD1;
-				s_o_ID_RD2                    <= s_i_ID_RD2;
-				s_o_ID_IMM                    <= s_i_ID_IMM;
-				s_o_ID_instr_30_25_14_to_12_3 <= s_i_ID_instr_30_25_14_to_12_3;
-				s_o_ID_instr_11_to_7          <= s_i_ID_instr_11_to_7;
-				s_o_ID_WB                     <= s_i_ID_WB;
-				s_o_ID_M                      <= s_i_ID_M;
-				s_o_ID_EX                     <= s_i_ID_EX;
-			end if;
+		if rising_edge(i_clk) then -- on rising clock edge
+			s_o_ID_PC                     <= s_i_ID_PC;
+			s_o_ID_RD1                    <= s_i_ID_RD1;
+			s_o_ID_RD2                    <= s_i_ID_RD2;
+			s_o_ID_IMM                    <= s_i_ID_IMM;
+			s_o_ID_instr_30_25_14_to_12_3 <= s_i_ID_instr_30_25_14_to_12_3;
+			s_o_ID_instr_11_to_7          <= s_i_ID_instr_11_to_7;
+			s_o_ID_WB                     <= s_i_ID_WB;
+			s_o_ID_M                      <= s_i_ID_M;
+			s_o_ID_EX                     <= s_i_ID_EX;
 		end if;
 	end process;
 
 	MainControl_EX : Process(i_clk) is -- EX/MEM
 	begin
-		if rising_edge(i_clk) then     -- on rising clock edge
-			if s_c_EX_stall = '0' then -- run
-				s_o_EX_ALU_OUT       <= s_i_EX_ALU_OUT;
-				s_o_EX_RD2           <= s_i_EX_RD2;
-				s_o_EX_instr_11_to_7 <= s_i_EX_instr_11_to_7;
-				s_o_EX_WB            <= s_i_EX_WB;
-				s_o_EX_M             <= s_i_EX_M;
-			end if;
+		if rising_edge(i_clk) then -- on rising clock edge
+			s_o_EX_ALU_OUT       <= s_i_EX_ALU_OUT;
+			s_o_EX_RD2           <= s_i_EX_RD2;
+			s_o_EX_instr_11_to_7 <= s_i_EX_instr_11_to_7;
+			s_o_EX_WB            <= s_i_EX_WB;
+			s_o_EX_M             <= s_i_EX_M;
 		end if;
 	end process;
 
 	MainControl_MEM : Process(i_clk) is -- MEM/WB
 	begin
-		if rising_edge(i_clk) then      -- on rising clock edge
-			if s_c_MEM_stall = '0' then -- run
-				s_o_MEM_DATA          <= s_i_MEM_DATA;
-				s_o_MEM_ALU_OUT       <= s_i_MEM_ALU_OUT;
-				s_o_MEM_instr_11_to_7 <= s_i_MEM_instr_11_to_7;
-				s_o_MEM_WB            <= s_i_MEM_WB;
-			end if;
+		if rising_edge(i_clk) then -- on rising clock edge
+			s_o_MEM_DATA          <= s_i_MEM_DATA;
+			s_o_MEM_ALU_OUT       <= s_i_MEM_ALU_OUT;
+			s_o_MEM_instr_11_to_7 <= s_i_MEM_instr_11_to_7;
+			s_o_MEM_WB            <= s_i_MEM_WB;
 		end if;
 	end process;
 
@@ -219,11 +213,12 @@ begin
 		control_EX      when '0',
 		(others => '0') when others;
 
-	ID_stage : instruction_decode
+	instruction_decode_1 : instruction_decode
 		port map (
 			clk                        => i_clk,
-			isJALR                     => '0', -- TODO : provient du control_unit
-			regWrite_in                => '0', -- TODO : provient du control_unit
+			isJALR                     => control_IsJalr,
+			isBRANCH                   => contorl_IsBranch,
+			regWrite_in                => s_o_MEM_WB(1),
 			PC_in                      => s_o_IF_PC,
 			instr_in                   => s_o_IF_instr,
 			write_reg_in               => s_o_MEM_instr_11_to_7,
@@ -234,8 +229,9 @@ begin
 			IMM_out                    => s_i_ID_IMM,
 			instr_30_25_14_to_12_3_out => s_i_ID_instr_30_25_14_to_12_3,
 			instr_11_to_7_out          => s_i_ID_instr_11_to_7,
-			jump_out                   => jump_addr
-		);
+			jump_out                   => jump_addr,
+			branch_cmp                 => BranchCmp
+		);	
 
 	with control_EX_flush select
 	s_i_EX_WB <=
@@ -307,17 +303,9 @@ begin
 			ID_Instruction_RD  => s_o_ID_instr_11_to_7,
 			EX_Instruction_RD  => s_o_EX_instr_11_to_7,
 			ID_MemRead         => s_o_ID_M(1),
-			EX_RegWrite        => s_o_EX_M(0),
+			ID_RegWrite        => s_o_ID_WB(1),
+			EX_RegWrite        => s_o_EX_WB(1),
 			IF_Stall           => hazard_IF_stall,
 			ID_Stall           => hazard_ID_stall
-		);
-
-	Branch_Compare_1 : Branch_Compare
-		port map (
-			Is_Branch      => contorl_IsBranch,
-			Funct3         => s_o_IF_instr(14 downto 12),
-			R_Data_1       => s_i_ID_RD1,
-			R_Data_2       => s_i_ID_RD2,
-			Branch_Cmp_Out => BranchCmp
 		);
 end Behavioral;

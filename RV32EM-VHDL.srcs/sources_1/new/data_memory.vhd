@@ -19,7 +19,7 @@ entity data_memory is
 end data_memory;
 
 architecture Behavioral of data_memory is
-	type ram_type is array(memory_size-1 downto 0) of std_logic_vector(data_size-1 downto 0);
+	type ram_type is array(0 to memory_size-1) of std_logic_vector(data_size-1 downto 0);
 	signal data_ram : ram_type := (
 			x"00000042", x"0000006f", x"0000006e", x"0000006a",
 			x"0000006f", x"00000075", x"00000072", x"00000000",

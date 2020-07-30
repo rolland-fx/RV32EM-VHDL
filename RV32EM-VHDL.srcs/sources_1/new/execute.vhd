@@ -59,7 +59,7 @@ begin
 	opA_mux <=
 		RD1_in          when "00",
 		PC_in           when "01",
-		(others => '0') when others;
+		(others => '1') when others;
 
 	with EX(1 downto 0) select
 	opB_mux <=

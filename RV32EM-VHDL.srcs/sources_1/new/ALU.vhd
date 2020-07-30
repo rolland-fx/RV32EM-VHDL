@@ -6,7 +6,7 @@
 -- Author      : Alexandre Viau <alexandre.viau.2@ens.etsmtl.ca>
 -- Company     : École de technologie Superieur
 -- Created     : Fri Jul  3 19:04:26 2020
--- Last update : Fri Jul 10 10:20:26 2020
+-- Last update : Thu Jul 30 10:37:17 2020
 -- Platform    : N/A
 -- Standard    : <VHDL-2008 | VHDL-2002 | VHDL-1993 | VHDL-1987>
 --------------------------------------------------------------------------------
@@ -71,10 +71,10 @@ begin
 	MUL_sig   <= std_logic_vector( signed(opA) * signed(opB));
 	MULSU_sig <= std_logic_vector(std_logic_vector(signed(MULSU_opA) * signed(MULSU_opB)));
 	MULU_sig  <= std_logic_vector(unsigned(opA)* unsigned(opB));
-	DIV_sig   <= std_logic_vector(signed(opA) / signed(opB));
-	DIVU_sig  <= std_logic_vector(unsigned(opA) / unsigned(opB));
-	REM_sig   <= std_logic_vector(signed(opA) rem signed(opB));
-	REMU_sig  <= std_logic_vector(unsigned(opA) rem unsigned(opB));
+	--DIV_sig   <= std_logic_vector(signed(opA) / signed(opB));
+	--DIVU_sig  <= std_logic_vector(unsigned(opA) / unsigned(opB));
+	--REM_sig   <= std_logic_vector(signed(opA) rem signed(opB));
+	--REMU_sig  <= std_logic_vector(unsigned(opA) rem unsigned(opB));
 
 
 

@@ -39,6 +39,7 @@ package part is
 		port (
 			clk                        : in  std_logic;
 			isJALR                     : in  std_logic;
+			isBRANCH                   : in  std_logic;
 			regWrite_in                : in  std_logic;
 			PC_in                      : in  std_logic_vector(31 downto 0);
 			instr_in                   : in  std_logic_vector(31 downto 0);
@@ -50,9 +51,10 @@ package part is
 			IMM_out                    : out std_logic_vector(31 downto 0);
 			instr_30_25_14_to_12_3_out : out std_logic_vector(5 downto 0);
 			instr_11_to_7_out          : out std_logic_vector(4 downto 0);
-			jump_out                   : out std_logic_vector(31 downto 0)
+			jump_out                   : out std_logic_vector(31 downto 0);
+			branch_cmp                 : out std_logic
 		);
-	end component instruction_decode;
+	end component instruction_decode;	
 
 	component execute is
 		port (
@@ -133,7 +135,6 @@ package part is
 		port (
 			Funct3    : in  std_logic_vector(2 downto 0);
 			Opcode    : in  std_logic_vector(6 downto 0);
-			Exception : out std_logic;
 			Jump      : out std_logic;
 			IF_Flush  : out std_logic;
 			ID_Flush  : out std_logic;
@@ -153,6 +154,7 @@ package part is
 			ID_Instruction_RD  : in  std_logic_vector(4 downto 0);
 			EX_Instruction_RD  : in  std_logic_vector(4 downto 0);
 			ID_MemRead         : in  std_logic;
+			ID_RegWrite        : in  std_logic;
 			EX_RegWrite        : in  std_logic;
 			IF_Stall           : out std_logic;
 			ID_Stall           : out std_logic

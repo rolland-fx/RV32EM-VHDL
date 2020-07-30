@@ -17,14 +17,15 @@ use IEEE.NUMERIC_STD.ALL;
 
 entity Hazard_detection_unit is
 	port (
-	IF_Instruction_RS1 : in std_logic_vector(4 downto 0);
-	IF_Instruction_RS2 : in std_logic_vector(4 downto 0);
-	ID_Instruction_RD  : in std_logic_vector(4 downto 0);
-	EX_Instruction_RD  : in std_logic_vector(4 downto 0);
-	ID_MemRead         : in std_logic;
-	EX_RegWrite        : in std_logic;
-	IF_Stall 	       : out std_logic;
-	ID_Stall 	       : out std_logic
+		IF_Instruction_RS1 : in  std_logic_vector(4 downto 0);
+		IF_Instruction_RS2 : in  std_logic_vector(4 downto 0);
+		ID_Instruction_RD  : in  std_logic_vector(4 downto 0);
+		EX_Instruction_RD  : in  std_logic_vector(4 downto 0);
+		ID_MemRead         : in  std_logic;
+		ID_RegWrite        : in  std_logic;
+		EX_RegWrite        : in  std_logic;
+		IF_Stall           : out std_logic;
+		ID_Stall           : out std_logic
 	);
 end entity Hazard_detection_unit;
 
@@ -33,13 +34,15 @@ architecture rtl of Hazard_detection_unit is
 
 begin
 	s_o_stall <= '1' when ((ID_Instruction_RD = IF_Instruction_RS1 AND IF_Instruction_RS1 /= "00000" AND ID_MemRead = '1')
-						 or(ID_Instruction_RD = IF_Instruction_RS2 AND IF_Instruction_RS2 /= "00000" AND ID_MemRead = '1')
-                         or(EX_Instruction_RD = IF_Instruction_RS1 AND IF_Instruction_RS1 /= "00000" AND EX_RegWrite = '1')
-                         or(EX_Instruction_RD = IF_Instruction_RS2 AND IF_Instruction_RS2 /= "00000" AND EX_RegWrite = '1'))
-				 else '0';
+			or(ID_Instruction_RD = IF_Instruction_RS2 AND IF_Instruction_RS2 /= "00000" AND ID_MemRead = '1')
+			or(ID_Instruction_RD = IF_Instruction_RS1 AND IF_Instruction_RS1 /= "00000" AND ID_RegWrite = '1')
+			or(ID_Instruction_RD = IF_Instruction_RS2 AND IF_Instruction_RS2 /= "00000" AND ID_RegWrite = '1')
+			or(EX_Instruction_RD = IF_Instruction_RS1 AND IF_Instruction_RS1 /= "00000" AND EX_RegWrite = '1')
+			or(EX_Instruction_RD = IF_Instruction_RS2 AND IF_Instruction_RS2 /= "00000" AND EX_RegWrite = '1'))
+	else '0';
 
 
 	IF_Stall <= s_o_stall;
 	ID_Stall <= s_o_stall;
-	
+
 end architecture rtl;

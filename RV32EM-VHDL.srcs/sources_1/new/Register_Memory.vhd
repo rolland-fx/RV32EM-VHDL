@@ -31,17 +31,17 @@ end Register_Memory;
 
 architecture rtl of Register_Memory is
   type ram_type is array (depth-1 downto 0) of std_logic_vector(data_width-1 downto 0);
-  shared variable RAM : ram_type := (others => (others => '0')) ;
+  signal RAM : ram_type := (others => (others => '0')) ;
 
 begin
 
-     R_Data_1 <= RAM(to_integer(unsigned(R_Reg_1)));
-     R_Data_2 <= RAM(to_integer(unsigned(R_Reg_2)));
+  R_Data_1 <= RAM(to_integer(unsigned(R_Reg_1)));
+  R_Data_2 <= RAM(to_integer(unsigned(R_Reg_2)));
   process(clk)
   begin
     if clk'event and clk = '0' then
       if we = '1' then
-        RAM(to_integer(unsigned(W_Reg))) := W_Data;
+        RAM(to_integer(unsigned(W_Reg))) <= W_Data;
       end if;
     end if;
   end process;
