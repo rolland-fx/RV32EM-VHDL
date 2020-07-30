@@ -6,7 +6,7 @@
 -- Author      : User Name <user.email@user.company.com>
 -- Company     : User Company Name
 -- Created     : Tue Jun 30 17:59:58 2020
--- Last update : Mon Jul 20 18:44:48 2020
+-- Last update : Thu Jul 30 15:00:38 2020
 -- Platform    : Default Part Number
 -- Standard    : <VHDL-2008 | VHDL-2002 | VHDL-1993 | VHDL-1987>
 --------------------------------------------------------------------------------
@@ -50,7 +50,7 @@ Instr_Mem : Instruction_Memory
       		generic map (
 			address_size => 32,
 			data_size    => 32,
-			memory_size  => 13
+			memory_size  => 20
 		)
 		port map (
 			PC_in    => PC_in,

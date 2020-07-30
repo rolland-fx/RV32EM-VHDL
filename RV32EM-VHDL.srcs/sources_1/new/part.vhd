@@ -4,36 +4,36 @@ use IEEE.STD_LOGIC_1164.ALL;
 package part is
 
 
-    COMPONENT Branch_Compare
-      Port(
-        Is_Branch : in std_logic;
-        Funct3    : in std_logic_vector(2 downto 0);
-        R_Data_1  : in std_logic_vector(31 downto 0);
-        R_Data_2  : in std_logic_vector(31 downto 0);
-    
-        Branch_Cmp_Out : out std_logic
-      );
-    END COMPONENT;
-    
-    COMPONENT Instruction_Memory
-	generic (
-		address_size : integer;
-		data_size    : integer;
-		memory_size  : integer 
-	);
-      PORT (
-        PC_in : IN STD_LOGIC_VECTOR(address_size-1 DOWNTO 0);
-        Instr_OUT : OUT STD_LOGIC_VECTOR(data_size-1 DOWNTO 0)
-      );
-    END COMPONENT;
-    
+	COMPONENT Branch_Compare
+		Port(
+			Is_Branch : in std_logic;
+			Funct3    : in std_logic_vector(2 downto 0);
+			R_Data_1  : in std_logic_vector(31 downto 0);
+			R_Data_2  : in std_logic_vector(31 downto 0);
+
+			Branch_Cmp_Out : out std_logic
+		);
+	END COMPONENT;
+
+	COMPONENT Instruction_Memory
+		generic (
+			address_size : integer;
+			data_size    : integer;
+			memory_size  : integer
+		);
+		PORT (
+			PC_in     : IN  STD_LOGIC_VECTOR(address_size-1 DOWNTO 0);
+			Instr_OUT : OUT STD_LOGIC_VECTOR(data_size-1 DOWNTO 0)
+		);
+	END COMPONENT;
+
 	component instruction_fetch is
 		port (
 			clk       : in  std_logic;
 			PC_in     : in  std_logic_vector(31 downto 0);
 			INSTR_out : out std_logic_vector(31 downto 0)
 		);
-	end component instruction_fetch;	
+	end component instruction_fetch;
 
 	component instruction_decode is
 		port (
@@ -54,7 +54,7 @@ package part is
 			jump_out                   : out std_logic_vector(31 downto 0);
 			branch_cmp                 : out std_logic
 		);
-	end component instruction_decode;	
+	end component instruction_decode;
 
 	component execute is
 		port (
@@ -71,12 +71,12 @@ package part is
 
 	component memory_access is
 		port (
-			clk              : in  std_logic;
-			M                : in  std_logic_vector(1 downto 0);
-			ALU_OUT_in       : in  std_logic_vector(31 downto 0);
-			RD2_in           : in  std_logic_vector(31 downto 0);
-			DATA_out         : out std_logic_vector(31 downto 0);
-			ADDR_out         : out std_logic_vector(31 downto 0)
+			clk        : in  std_logic;
+			M          : in  std_logic_vector(1 downto 0);
+			ALU_OUT_in : in  std_logic_vector(31 downto 0);
+			RD2_in     : in  std_logic_vector(31 downto 0);
+			DATA_out   : out std_logic_vector(31 downto 0);
+			ADDR_out   : out std_logic_vector(31 downto 0)
 		);
 	end component memory_access;
 
@@ -87,7 +87,7 @@ package part is
 			ALU_OUT_in : in  std_logic_vector(31 downto 0);
 			DATA_out   : out std_logic_vector(31 downto 0)
 		);
-	end component write_back;	
+	end component write_back;
 
 	component ALU is
 		port (
@@ -143,9 +143,10 @@ package part is
 			M         : out std_logic_vector(1 downto 0);
 			EX        : out std_logic_vector(5 downto 0);
 			IS_Branch : out std_logic;
-			IS_Jalr   : out std_logic
+			IS_Jalr   : out std_logic;
+			Exception : out std_logic
 		);
-	end component control_unit;	
+	end component control_unit;
 
 	component Hazard_detection_unit is
 		port (
@@ -176,5 +177,5 @@ package part is
 			read_data  : out std_logic_vector(data_size-1 downto 0)
 		);
 	end component data_memory;
-		
+
 end package part;

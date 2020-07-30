@@ -98,15 +98,16 @@ architecture Behavioral of Main is
 	signal WB_sig        : std_logic_vector(31 downto 0);
 
 	-- Control Unit SIGNAL
-	signal control_Jump     : std_logic;
-	signal control_IF_Flush : std_logic;
-	signal control_ID_flush : std_logic;
-	signal control_EX_flush : std_logic;
-	signal control_WB       : std_logic_vector(1 downto 0);
-	signal control_M        : std_logic_vector(1 downto 0);
-	signal control_EX       : std_logic_vector(5 downto 0);
-	signal contorl_IsBranch : std_logic;
-	signal control_IsJalr   : std_logic;
+	signal control_Jump      : std_logic;
+	signal control_IF_Flush  : std_logic;
+	signal control_ID_flush  : std_logic;
+	signal control_EX_flush  : std_logic;
+	signal control_WB        : std_logic_vector(1 downto 0);
+	signal control_M         : std_logic_vector(1 downto 0);
+	signal control_EX        : std_logic_vector(5 downto 0);
+	signal contorl_IsBranch  : std_logic;
+	signal control_IsJalr    : std_logic;
+	signal control_Exception : std_logic;
 
 	-- Hazard detection unit signal
 	signal hazard_IF_stall : std_logic;
@@ -115,17 +116,18 @@ architecture Behavioral of Main is
 	-- OTHER SIGNAL
 	signal control_mux_select : std_logic;
 	signal BranchCmp          : std_logic;
-	signal PCsrc              : std_logic;
+	signal PCsrc              : std_logic_vector(1 downto 0);
 	signal jump_addr          : std_logic_vector(31 downto 0);
 
 begin
 
-	PCsrc <= (BranchCmp and control_Jump);
+	PCsrc <= (BranchCmp and control_Jump) & control_Exception;
 
 	with PCsrc select
 	s_i_PC <=
-		std_logic_vector(unsigned(s_o_PC) + 4) when '0',
-		jump_addr                              when '1',
+		std_logic_vector(unsigned(s_o_PC) + 4) when "00",
+		jump_addr                              when "10",
+		s_o_IF_PC                              when "01",
 		(others => '0')                        when others;
 
 	s_c_PC_stall <= hazard_ID_stall or hazard_IF_stall;
@@ -138,7 +140,7 @@ begin
 	end process;
 
 	s_c_IF_stall <= hazard_ID_stall or hazard_IF_stall;
-	s_c_IF_flush <= control_IF_Flush;
+	s_c_IF_flush <= control_IF_Flush or (contorl_IsBranch and BranchCmp);
 
 	MainControl_IF : Process(i_clk) is -- IF/ID
 	begin
@@ -231,7 +233,7 @@ begin
 			instr_11_to_7_out          => s_i_ID_instr_11_to_7,
 			jump_out                   => jump_addr,
 			branch_cmp                 => BranchCmp
-		);	
+		);
 
 	with control_EX_flush select
 	s_i_EX_WB <=
@@ -293,7 +295,8 @@ begin
 			M         => control_M,
 			EX        => control_EX,
 			IS_Branch => contorl_IsBranch,
-			IS_Jalr   => control_IsJalr
+			IS_Jalr   => control_IsJalr,
+			Exception => control_Exception
 		);
 
 	Hazard_detection_unit_1 : Hazard_detection_unit

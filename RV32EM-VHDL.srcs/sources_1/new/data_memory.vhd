@@ -40,7 +40,7 @@ architecture Behavioral of data_memory is
 
 begin
 
-	read_data <= data_ram(to_integer(shift_right(unsigned(address),2)));
+	read_data <= data_ram(to_integer(unsigned(address)));
     process(clk)
     begin
         if rising_edge(clk) then
