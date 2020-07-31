@@ -6,7 +6,7 @@
 -- Author      : Alexandre Viau <alexandre.viau.2@ens.etsmtl.ca
 -- Company     : École de technologie supérieur
 -- Created     : Fri Jul 17 09:43:36 2020
--- Last update : Fri Jul 17 11:48:46 2020
+-- Last update : Fri Jul 31 17:21:14 2020
 -- Platform    : NùA
 -- Standard    : <VHDL-2008 | VHDL-2002 | VHDL-1993 | VHDL-1987>
 --------------------------------------------------------------------------------
@@ -48,13 +48,15 @@ begin
 
 	with instruction(14 downto 12) select
 	I_type_artm <=
-		std_logic_vector(resize(signed(I_type_imm), I_type_artm'length))   when "000",
-		std_logic_vector(resize(signed(I_type_imm), I_type_artm'length))   when "010",
-		std_logic_vector(resize(unsigned(I_type_imm), I_type_artm'length)) when "011",
-		std_logic_vector(resize(unsigned(I_type_imm), I_type_artm'length)) when "100",
-		std_logic_vector(resize(unsigned(I_type_imm), I_type_artm'length)) when "110",
-		std_logic_vector(resize(unsigned(I_type_imm), I_type_artm'length)) when "111",
-		(others => '0')                                                    when others;
+		std_logic_vector(resize(signed(I_type_imm), I_type_artm'length))              when "000",
+		std_logic_vector(resize(unsigned(I_type_imm and x"01f"), I_type_artm'length)) when "001",
+		std_logic_vector(resize(signed(I_type_imm), I_type_artm'length))              when "010",
+		std_logic_vector(resize(unsigned(I_type_imm), I_type_artm'length))            when "011",
+		std_logic_vector(resize(unsigned(I_type_imm), I_type_artm'length))            when "100",
+		std_logic_vector(resize(unsigned(I_type_imm and x"01f"), I_type_artm'length)) when "101",
+		std_logic_vector(resize(unsigned(I_type_imm), I_type_artm'length))            when "110",
+		std_logic_vector(resize(unsigned(I_type_imm), I_type_artm'length))            when "111",
+		(others => '0')                                                               when others;
 
 	I_type_load <= std_logic_vector(resize(signed(I_type_imm), I_type_load'length));
 

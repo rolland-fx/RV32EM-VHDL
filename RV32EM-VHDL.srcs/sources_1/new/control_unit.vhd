@@ -145,16 +145,29 @@ begin
 					Exception <= '0';
 				end if;
 			when "0010011" => --I type
-				Jump      <= '0';
-				IF_Flush  <= '0';
-				ID_Flush  <= '0';
-				EX_Flush  <= '0';
-				WB        <= "10";
-				M         <= "00";
-				EX        <= "110001";
-				IS_Branch <= '0';
-				IS_Jalr   <= '0';
-				Exception <= '0';
+				if (Funct3 = "001" or Funct3 = "101") then
+					Jump <= '0';
+					IF_Flush  <= '0';
+					ID_Flush  <= '0';
+					EX_Flush  <= '0';
+					WB        <= "10";
+					M         <= "00";
+					EX        <= "100001";
+					IS_Branch <= '0';
+					IS_Jalr   <= '0';
+					Exception <= '0';
+				else
+					Jump      <= '0';
+					IF_Flush  <= '0';
+					ID_Flush  <= '0';
+					EX_Flush  <= '0';
+					WB        <= "10";
+					M         <= "00";
+					EX        <= "110001";
+					IS_Branch <= '0';
+					IS_Jalr   <= '0';
+					Exception <= '0';
+				end if;
 			when "0000011" => --LOAD
 				if (Funct3 = "011" or Funct3 = "110" or Funct3 = "111") then
 					Jump      <= '0';
