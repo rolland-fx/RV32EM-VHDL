@@ -59,15 +59,15 @@ begin
 
 	data_memory_1 : data_memory
 		generic map (
-			address_size => 6,
+			address_size => 20,
 			data_size    => 32,
-			memory_size  => 64
+			memory_size  => 16384
 		)
 		port map (
 			clk        => clk,
 			MemRead    => MemRead,
 			MemWrite   => MemWrite,
-			address    => ALU_OUT_in(5 downto 0),
+			address    => ALU_OUT_in(19 downto 0),
 			write_data => RD2_in,
 			read_data  => DATA_out
 		);

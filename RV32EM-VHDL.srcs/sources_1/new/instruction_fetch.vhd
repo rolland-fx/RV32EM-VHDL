@@ -50,7 +50,7 @@ Instr_Mem : Instruction_Memory
       		generic map (
 			address_size => 32,
 			data_size    => 32,
-			memory_size  => 20
+			memory_size  => 60
 		)
 		port map (
 			PC_in    => PC_in,
