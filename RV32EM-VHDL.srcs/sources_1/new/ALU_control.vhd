@@ -6,7 +6,7 @@
 -- Author      : Alexandre Viau <alexandre.viau.2@ens.etsmtl.ca
 -- Company     : École de technologie supérieur
 -- Created     : Fri Jul 10 09:14:57 2020
--- Last update : Mon Jul 13 17:26:20 2020
+-- Last update : Fri Jul 31 11:45:32 2020
 -- Platform    : NùA
 -- Standard    : <VHDL-2008 | VHDL-2002 | VHDL-1993 | VHDL-1987>
 --------------------------------------------------------------------------------
@@ -26,18 +26,26 @@ entity ALU_control is
 end entity ALU_control;
 
 architecture rtl of ALU_control is
-	signal mux_1 : std_logic_vector(4 downto 0);
-	signal mux_2 : std_logic_vector(4 downto 0);
+	signal mux_1          : std_logic_vector(4 downto 0);
+	signal mux_2          : std_logic_vector(4 downto 0);
+	signal load_store_mux : std_logic_vector(4 downto 0);
 
 begin
 
 	with ALUOp select
 	ALUControl <=
-		"00001" when "00",
-		"00010" when "01" ,
-		mux_1   when "10" ,
-		mux_2   when "11",
-		"00000" when others;
+		load_store_mux when "00",
+		"00010"        when "01" ,
+		mux_1          when "10" ,
+		mux_2          when "11",
+		"00000"        when others;
+
+	with instr_30_25_14_to_12_3(2 downto 1) select
+	load_store_mux <=
+		"10101"         when "00",
+		"11001"         when "01",
+		"00001"         when "10",
+		(others => '0') when others;
 
 	with instr_30_25_14_to_12_3 select
 	mux_1 <=

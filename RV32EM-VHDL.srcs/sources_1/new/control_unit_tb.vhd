@@ -6,7 +6,7 @@
 -- Author      : User Name <user.email@user.company.com>
 -- Company     : User Company Name
 -- Created     : Mon Jul 27 15:41:25 2020
--- Last update : Mon Jul 27 21:56:52 2020
+-- Last update : Fri Jul 31 13:02:53 2020
 -- Platform    : Default Part Number
 -- Standard    : <VHDL-2008 | VHDL-2002 | VHDL-1993 | VHDL-1987>
 --------------------------------------------------------------------------------
@@ -209,7 +209,7 @@ begin
 		Opcode <= "1110011";
 		wait for 10 ns; --ECALL
 		check_equal(Jump,std_logic'('0'),"(ECALL) Jump = 0");
-		check_equal(IF_Flush,std_logic'('0'),"(ECALL) IF_Flush = 0");
+		check_equal(IF_Flush,std_logic'('1'),"(ECALL) IF_Flush = 1");
 		check_equal(ID_Flush,std_logic'('0'),"(ECALL) ID_Flush = 0");
 		check_equal(EX_Flush,std_logic'('0'),"(ECALL) EX_Flush = 0");
 		check_equal(WB,std_logic_vector'("00"),"(ECALL) WB = 00");

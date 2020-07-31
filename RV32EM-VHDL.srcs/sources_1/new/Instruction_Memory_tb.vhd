@@ -6,7 +6,7 @@
 -- Author      : Alexandre Viau <alexandre.viau.2@ens.etsmtl.ca
 -- Company     : École de technologie supérieur
 -- Created     : Sat Jul 25 20:47:29 2020
--- Last update : Mon Jul 27 19:15:43 2020
+-- Last update : Thu Jul 30 15:29:08 2020
 -- Platform    : NùA
 -- Standard    : <VHDL-2008 | VHDL-2002 | VHDL-1993 | VHDL-1987>
 --------------------------------------------------------------------------------
@@ -37,7 +37,7 @@ architecture testbench of Instruction_Memory_tb is
 	-- Testbench DUT generics
 	constant address_size : integer := 32;
 	constant data_size    : integer := 32;
-	constant memory_size  : integer := 13;
+	constant memory_size  : integer := 20;
 
 	-- Testbench DUT ports
 	signal PC_in     : STD_LOGIC_VECTOR(address_size-1 DOWNTO 0);
@@ -63,7 +63,7 @@ begin
 
 		PC_in <= x"00000000";
 		wait for 10 ns;
-		check_equal(Instr_OUT, std_logic_vector'(x"00400597"));
+		check_equal(Instr_OUT, std_logic_vector'(x"00000597"));
 
 		PC_in <= x"00000004";
 		wait for 10 ns;

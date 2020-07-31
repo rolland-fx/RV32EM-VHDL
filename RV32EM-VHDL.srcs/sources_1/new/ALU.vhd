@@ -6,7 +6,7 @@
 -- Author      : Alexandre Viau <alexandre.viau.2@ens.etsmtl.ca>
 -- Company     : École de technologie Superieur
 -- Created     : Fri Jul  3 19:04:26 2020
--- Last update : Thu Jul 30 10:37:17 2020
+-- Last update : Fri Jul 31 12:58:14 2020
 -- Platform    : N/A
 -- Standard    : <VHDL-2008 | VHDL-2002 | VHDL-1993 | VHDL-1987>
 --------------------------------------------------------------------------------
@@ -52,6 +52,8 @@ architecture rtl of ALU is
 	signal DIVU_sig  : std_logic_vector(31 downto 0);
 	signal REM_sig   : std_logic_vector(31 downto 0);
 	signal REMU_sig  : std_logic_vector(31 downto 0);
+	signal ls_1      : std_logic_vector(31 downto 0);
+	signal ls_2      : std_logic_vector(31 downto 0);
 
 begin
 	MULSU_opA              <= std_logic_vector(resize(signed(opA), MULSU_opA'length));
@@ -75,7 +77,8 @@ begin
 	--DIVU_sig  <= std_logic_vector(unsigned(opA) / unsigned(opB));
 	--REM_sig   <= std_logic_vector(signed(opA) rem signed(opB));
 	--REMU_sig  <= std_logic_vector(unsigned(opA) rem unsigned(opB));
-
+	ls_1 <= std_logic_vector(shift_left(signed(opA) + signed(opB), 1));
+	ls_2 <= std_logic_vector(shift_left(signed(opA) + signed(opB), 2));
 
 
 	with ALU_control select
@@ -98,6 +101,8 @@ begin
 		DIVU_sig                when "10000",
 		REM_sig                 when "10001",
 		REMU_sig                when "10010",
+		ls_1                    when "11001",
+		ls_2                    when "10101",
 		(others => '0')         when others;
 
 
