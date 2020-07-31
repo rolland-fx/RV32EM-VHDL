@@ -151,7 +151,7 @@ begin
 				EX_Flush  <= '0';
 				WB        <= "10";
 				M         <= "00";
-				EX        <= "100001";
+				EX        <= "110001";
 				IS_Branch <= '0';
 				IS_Jalr   <= '0';
 				Exception <= '0';
