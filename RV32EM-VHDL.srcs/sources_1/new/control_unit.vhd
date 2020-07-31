@@ -68,7 +68,7 @@ begin
 				EX_Flush  <= '0';
 				WB        <= "10";
 				M         <= "00";
-				EX        <= "000110";
+				EX        <= "010110";
 				IS_Branch <= '0';
 				IS_Jalr   <= '0';
 				Exception <= '0';
@@ -80,7 +80,7 @@ begin
 					EX_Flush  <= '0';
 					WB        <= "10";
 					M         <= "00";
-					EX        <= "000110";
+					EX        <= "010110";
 					IS_Branch <= '0';
 					IS_Jalr   <= '1';
 					Exception <= '0';
