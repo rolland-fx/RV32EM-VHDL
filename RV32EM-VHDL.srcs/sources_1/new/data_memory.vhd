@@ -21,7 +21,7 @@ end data_memory;
 architecture Behavioral of data_memory is
 	type ram_type is array(0 to memory_size-1) of std_logic_vector(data_size-1 downto 0);
 	signal data_ram : ram_type := (
-			x"40490fdb", x"00000000", x"00000000", x"00000000",
+			x"40490fdb", x"449f2e14", x"7F800000", x"007FFFFF",
 			x"00000000", x"00000000", x"00000000", x"00000000",
 			x"00000000", x"00000000", x"00000000", x"00000000",
 			x"00000000", x"00000000", x"00000000", x"00000000",
@@ -4121,7 +4121,7 @@ architecture Behavioral of data_memory is
 
 begin
 
-	read_data <= data_ram(to_integer(unsigned(address)));
+	read_data <= data_ram(to_integer(shift_right(unsigned(address),2)));
     process(clk)
     begin
         if rising_edge(clk) then

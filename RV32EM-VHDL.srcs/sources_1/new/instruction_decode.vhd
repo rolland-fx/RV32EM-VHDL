@@ -6,7 +6,7 @@
 -- Author      : User Name <user.email@user.company.com>
 -- Company     : User Company Name
 -- Created     : Tue Jun 30 18:14:47 2020
--- Last update : Mon Jul 27 19:33:54 2020
+-- Last update : Fri Jul 31 16:13:22 2020
 -- Platform    : Default Part Number
 -- Standard    : <VHDL-2008 | VHDL-2002 | VHDL-1993 | VHDL-1987>
 --------------------------------------------------------------------------------
@@ -71,16 +71,16 @@ begin
 
 	Register_Memory_1 : Register_Memory
 		generic map (
-			address_width => 5,
+			address_width => 4,
 			data_width    => 32,
 			depth         => 16
 		)
 		port map (
 			clk      => clk,
 			we       => regWrite_in,
-			R_Reg_1  => instr_in(19 downto 15),
-			R_Reg_2  => instr_in(24 downto 20),
-			W_Reg    => write_reg_in,
+			R_Reg_1  => instr_in(18 downto 15),
+			R_Reg_2  => instr_in(23 downto 20),
+			W_Reg    => write_reg_in(3 downto 0),
 			W_Data   => write_data_in,
 			R_Data_1 => RD1,
 			R_Data_2 => RD2

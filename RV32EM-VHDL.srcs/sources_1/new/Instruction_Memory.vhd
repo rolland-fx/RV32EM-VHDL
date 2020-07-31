@@ -29,7 +29,7 @@ architecture Behavioral of Instruction_Memory is
                                             x"00000517", -- modified
                                             x"00052503", -- modified
                                             x"00000597", -- -- modified
-                                            x"0005a583", -- x"ffc5a583", -- 0005a583
+                                            x"ffc5a583", -- 0005a583
                                             x"004000ef",
                                             x"00050663",
                                             x"00058463",
@@ -37,9 +37,9 @@ architecture Behavioral of Instruction_Memory is
                                             x"00000513",
                                             x"00008067",
                                             x"00000397", -- modified
-                                            x"0013a383", --fe03a383
+                                            x"fe03a383",
                                             x"00000417", -- modified
-                                            x"00a42403", --fdc42403
+                                            x"fdc42403",
                                             x"007571b3",
                                             x"0171d193",
                                             x"0075f233",

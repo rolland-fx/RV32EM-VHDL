@@ -6,7 +6,7 @@
 -- Author      : Alexandre Viau <alexandre.viau.2@ens.etsmtl.ca
 -- Company     : École de technologie supérieur
 -- Created     : Mon Jul 27 19:05:12 2020
--- Last update : Mon Jul 27 22:01:11 2020
+-- Last update : Fri Jul 31 16:17:10 2020
 -- Platform    : NùA
 -- Standard    : <VHDL-2008 | VHDL-2002 | VHDL-1993 | VHDL-1987>
 --------------------------------------------------------------------------------
@@ -62,7 +62,7 @@ begin
 	begin
 		test_runner_setup(runner, runner_cfg);
 
-		wait for 500000 ns;
+		wait for 2000 ns;
 
 		test_runner_cleanup(runner);
 	end process;

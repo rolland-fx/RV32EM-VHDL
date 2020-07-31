@@ -6,7 +6,7 @@
 -- Author      : Alexandre Viau <alexandre.viau.2@ens.etsmtl.ca
 -- Company     : École de technologie supérieur
 -- Created     : Fri Jul 10 09:14:57 2020
--- Last update : Fri Jul 31 11:45:32 2020
+-- Last update : Fri Jul 31 16:39:41 2020
 -- Platform    : NùA
 -- Standard    : <VHDL-2008 | VHDL-2002 | VHDL-1993 | VHDL-1987>
 --------------------------------------------------------------------------------
@@ -35,7 +35,7 @@ begin
 	with ALUOp select
 	ALUControl <=
 		load_store_mux when "00",
-		"00010"        when "01" ,
+		"00001"        when "01" ,
 		mux_1          when "10" ,
 		mux_2          when "11",
 		"00000"        when others;
