@@ -7,7 +7,8 @@ use work.part.all;
 
 entity Main is
 	Port (
-		i_clk : in STD_LOGIC
+		i_clk : in STD_LOGIC;
+		o_clk : out std_logic
 	);
 
 end Main;
