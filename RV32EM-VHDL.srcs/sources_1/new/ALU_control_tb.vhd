@@ -6,7 +6,7 @@
 -- Author      : Alexandre Viau <alexandre.viau.2@ens.etsmtl.ca
 -- Company     : École de technologie supérieur
 -- Created     : Mon Jul 13 17:07:31 2020
--- Last update : Fri Jul 31 11:52:20 2020
+-- Last update : Fri Jul 31 19:50:08 2020
 -- Platform    : NùA
 -- Standard    : <VHDL-2008 | VHDL-2002 | VHDL-1993 | VHDL-1987>
 --------------------------------------------------------------------------------
@@ -64,7 +64,7 @@ begin
 
 		ALUOp <= "01";
 		wait for 10 ns;
-		check_equal(ALUControl, std_logic_vector'("00010"), "ALUOp = 01");
+		check_equal(ALUControl, std_logic_vector'("00001"), "ALUOp = 01");
 
 		ALUOp <= "10";
 		instr_30_25_14_to_12_3 <= "000000";

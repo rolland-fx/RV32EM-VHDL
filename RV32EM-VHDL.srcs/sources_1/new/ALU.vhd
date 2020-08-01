@@ -6,7 +6,7 @@
 -- Author      : Alexandre Viau <alexandre.viau.2@ens.etsmtl.ca>
 -- Company     : École de technologie Superieur
 -- Created     : Fri Jul  3 19:04:26 2020
--- Last update : Fri Jul 31 16:39:54 2020
+-- Last update : Fri Jul 31 19:46:19 2020
 -- Platform    : N/A
 -- Standard    : <VHDL-2008 | VHDL-2002 | VHDL-1993 | VHDL-1987>
 --------------------------------------------------------------------------------
@@ -73,13 +73,24 @@ begin
 	MUL_sig   <= std_logic_vector( signed(opA) * signed(opB));
 	MULSU_sig <= std_logic_vector(std_logic_vector(signed(MULSU_opA) * signed(MULSU_opB)));
 	MULU_sig  <= std_logic_vector(unsigned(opA)* unsigned(opB));
-	--DIV_sig   <= std_logic_vector(signed(opA) / signed(opB));
-	--DIVU_sig  <= std_logic_vector(unsigned(opA) / unsigned(opB));
-	--REM_sig   <= std_logic_vector(signed(opA) rem signed(opB));
-	--REMU_sig  <= std_logic_vector(unsigned(opA) rem unsigned(opB));
-	ls_1 <= std_logic_vector(shift_left(signed(opA) + signed(opB), 1));
-	ls_2 <= std_logic_vector(shift_left(signed(opA) + signed(opB), 2));
-
+	ls_1      <= std_logic_vector(shift_left(signed(opA) + signed(opB), 1));
+	ls_2      <= std_logic_vector(shift_left(signed(opA) + signed(opB), 2));
+	with opB select
+	DIV_sig <=
+		x"7fffffff"                                 when x"00000000",
+		std_logic_vector(signed(opA) / signed(opB)) when others;
+	with opB select
+	DIVU_sig <=
+		x"7fffffff"                                     when x"00000000",
+		std_logic_vector(unsigned(opA) / unsigned(opB)) when others;
+	with opB select
+	REM_sig <=
+		x"7fffffff"                                   when x"00000000",
+		std_logic_vector(signed(opA) rem signed(opB)) when others;
+	with opB select
+	REMU_sig <=
+		x"7fffffff"                                       when x"00000000",
+		std_logic_vector(unsigned(opA) rem unsigned(opB)) when others;
 
 	with ALU_control select
 	ALU_out <=

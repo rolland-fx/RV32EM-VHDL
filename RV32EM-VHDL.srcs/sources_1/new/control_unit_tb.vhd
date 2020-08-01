@@ -6,7 +6,7 @@
 -- Author      : User Name <user.email@user.company.com>
 -- Company     : User Company Name
 -- Created     : Mon Jul 27 15:41:25 2020
--- Last update : Fri Jul 31 13:02:53 2020
+-- Last update : Fri Jul 31 19:53:33 2020
 -- Platform    : Default Part Number
 -- Standard    : <VHDL-2008 | VHDL-2002 | VHDL-1993 | VHDL-1987>
 --------------------------------------------------------------------------------
@@ -88,19 +88,6 @@ begin
 		check_equal(IS_Branch,std_logic'('0'),"(R type) IS_Branch = 0");
 		check_equal(IS_Jalr,std_logic'('0'),"(R type) IS_Jalr = 0");
 
-		Funct3 <= "000";
-		Opcode <= "1100011";
-		wait for 10 ns; --B type (BEQ)
-		check_equal(Jump,std_logic'('1'),"(B type) Jump = 1");
-		check_equal(IF_Flush,std_logic'('0'),"(B type) IF_Flush = 0");
-		check_equal(ID_Flush,std_logic'('0'),"(B type) ID_Flush = 0");
-		check_equal(EX_Flush,std_logic'('0'),"(B type) EX_Flush = 0");
-		check_equal(WB,std_logic_vector'("00"),"(B type) WB = 00");
-		check_equal(M,std_logic_vector'("00"),"(B type) M = 00");
-		check_equal(EX,std_logic_vector'("010000"),"(B type) EX = 010000");
-		check_equal(IS_Branch,std_logic'('1'),"(B type) IS_Branch = 1");
-		check_equal(IS_Jalr,std_logic'('0'),"(B type) IS_Jalr = 0");
-
 		Funct3 <= "010";
 		Opcode <= "0100011";
 		wait for 10 ns; --S type (SW)
@@ -136,7 +123,7 @@ begin
 		check_equal(EX_Flush,std_logic'('0'),"(I type) EX_Flush = 0");
 		check_equal(WB,std_logic_vector'("10"),"(I type) WB = 10");
 		check_equal(M,std_logic_vector'("00"),"(I type) M = 00");
-		check_equal(EX,std_logic_vector'("100001"),"(I type) EX = 100001");
+		check_equal(EX,std_logic_vector'("110001"),"(I type) EX = 100001");
 		check_equal(IS_Branch,std_logic'('0'),"(I type) IS_Branch = 0");
 		check_equal(IS_Jalr,std_logic'('0'),"(I type) IS_Jalr = 0");
 
@@ -149,7 +136,7 @@ begin
 		check_equal(EX_Flush,std_logic'('0'),"(LUI) EX_Flush = 0");
 		check_equal(WB,std_logic_vector'("10"),"(LUI) WB = 10");
 		check_equal(M,std_logic_vector'("00"),"(LUI) M = 00");
-		check_equal(EX,std_logic_vector'("001001"),"(LUI) EX = 001001");
+		check_equal(EX,std_logic_vector'("011001"),"(LUI) EX = 001001");
 		check_equal(IS_Branch,std_logic'('0'),"(LUI) IS_Branch = 0");
 		check_equal(IS_Jalr,std_logic'('0'),"(LUI) IS_Jalr = 0");
 
@@ -162,7 +149,7 @@ begin
 		check_equal(EX_Flush,std_logic'('0'),"(AUIPC) EX_Flush = 0");
 		check_equal(WB,std_logic_vector'("10"),"(AUIPC) WB = 10");
 		check_equal(M,std_logic_vector'("00"),"(AUIPC) M = 00");
-		check_equal(EX,std_logic_vector'("000101"),"(AUIPC) EX = 000101");
+		check_equal(EX,std_logic_vector'("010101"),"(AUIPC) EX = 000101");
 		check_equal(IS_Branch,std_logic'('0'),"(AUIPC) IS_Branch = 0");
 		check_equal(IS_Jalr,std_logic'('0'),"(AUIPC) IS_Jalr = 0");
 
@@ -175,7 +162,7 @@ begin
 		check_equal(EX_Flush,std_logic'('0'),"(JAL) EX_Flush = 0");
 		check_equal(WB,std_logic_vector'("10"),"(JAL) WB = 10");
 		check_equal(M,std_logic_vector'("00"),"(JAL) M = 00");
-		check_equal(EX,std_logic_vector'("000110"),"(JAL) EX = 000110");
+		check_equal(EX,std_logic_vector'("010110"),"(JAL) EX = 000110");
 		check_equal(IS_Branch,std_logic'('0'),"(JAL) IS_Branch = 0");
 		check_equal(IS_Jalr,std_logic'('0'),"(JAL) IS_Jalr = 0");
 
@@ -188,7 +175,7 @@ begin
 		check_equal(EX_Flush,std_logic'('0'),"(JALR) EX_Flush = 0");
 		check_equal(WB,std_logic_vector'("10"),"(JALR) WB = 10");
 		check_equal(M,std_logic_vector'("00"),"(JALR) M = 00");
-		check_equal(EX,std_logic_vector'("000110"),"(JALR) EX = 000110");
+		check_equal(EX,std_logic_vector'("010110"),"(JALR) EX = 000110");
 		check_equal(IS_Branch,std_logic'('0'),"(JALR) IS_Branch = 0");
 		check_equal(IS_Jalr,std_logic'('1'),"(JALR) IS_Jalr = 1");
 
