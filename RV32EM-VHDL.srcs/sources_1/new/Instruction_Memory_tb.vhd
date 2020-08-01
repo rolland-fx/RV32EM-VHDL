@@ -6,7 +6,7 @@
 -- Author      : Alexandre Viau <alexandre.viau.2@ens.etsmtl.ca
 -- Company     : École de technologie supérieur
 -- Created     : Sat Jul 25 20:47:29 2020
--- Last update : Fri Jul 31 19:56:59 2020
+-- Last update : Fri Jul 31 20:08:03 2020
 -- Platform    : NùA
 -- Standard    : <VHDL-2008 | VHDL-2002 | VHDL-1993 | VHDL-1987>
 --------------------------------------------------------------------------------
@@ -63,11 +63,11 @@ begin
 
 		PC_in <= x"00000000";
 		wait for 10 ns;
-		check_equal(Instr_OUT, std_logic_vector'(x"00000517"));
+		check_equal(Instr_OUT, std_logic_vector'(x"00000597"));
 
 		PC_in <= x"00000004";
 		wait for 10 ns;
-		check_equal(Instr_OUT, std_logic_vector'(x"00052503"));
+		check_equal(Instr_OUT, std_logic_vector'(x"00058593"));
 
 		test_runner_cleanup(runner);
 	end process;
