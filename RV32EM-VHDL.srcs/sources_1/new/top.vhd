@@ -7,8 +7,11 @@ use work.part.all;
 
 entity Main is
 	Port (
-		i_clk : in STD_LOGIC;
-		o_clk : out std_logic
+		i_clk : in  STD_LOGIC;
+		JA    : out std_logic_vector(7 downto 0);
+		JB    : out std_logic_vector(7 downto 0);
+		JC    : out std_logic_vector(7 downto 0);
+		JD    : out std_logic_vector(7 downto 0)
 	);
 
 end Main;
@@ -121,6 +124,11 @@ architecture Behavioral of Main is
 	signal jump_addr          : std_logic_vector(31 downto 0);
 
 begin
+
+	JA <= s_o_IF_instr(7 downto 0);
+	JB <= s_o_IF_instr(15 downto 8);
+	JC <= s_o_IF_instr(23 downto 16);
+	JD <= s_o_IF_instr(31 downto 24);
 
 	PCsrc <= (BranchCmp and control_Jump) & control_Exception;
 
