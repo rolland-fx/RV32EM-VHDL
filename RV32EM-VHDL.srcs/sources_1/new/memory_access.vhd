@@ -61,7 +61,7 @@ begin
 		generic map (
 			address_size => 12,
 			data_size    => 32,
-			memory_size  => 4096
+			memory_size  => 1024
 		)
 		port map (
 			clk        => clk,

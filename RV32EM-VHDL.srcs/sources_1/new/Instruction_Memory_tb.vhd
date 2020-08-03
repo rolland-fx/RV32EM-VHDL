@@ -37,7 +37,7 @@ architecture testbench of Instruction_Memory_tb is
 	-- Testbench DUT generics
 	constant address_size : integer := 32;
 	constant data_size    : integer := 32;
-	constant memory_size  : integer := 20;
+	constant memory_size  : integer := 1024;
 
 	-- Testbench DUT ports
 	signal PC_in     : STD_LOGIC_VECTOR(address_size-1 DOWNTO 0);
@@ -79,7 +79,7 @@ begin
 		generic map (
 			address_size => 32,
 			data_size    => 32,
-			memory_size  => 60
+			memory_size  => 1024
 		)
 		port map (
 			PC_in     => PC_in,

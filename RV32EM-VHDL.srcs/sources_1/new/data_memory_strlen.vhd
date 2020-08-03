@@ -2,45 +2,27 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
-
--- Uncomment the following library declaration if instantiating
--- any Xilinx leaf cells in this code.
---library UNISIM;
---use UNISIM.VComponents.all;
-
-entity Instruction_Memory is
+entity data_memory is
 	generic (
-		address_size : integer;
-		data_size    : integer;
-		memory_size  : integer
+		address_size : integer := 12;
+		data_size    : integer := 32;
+		memory_size  : integer := 1024
 	);
-      PORT (
-        PC_in : IN STD_LOGIC_VECTOR(address_size-1 DOWNTO 0);
-        Instr_OUT : OUT STD_LOGIC_VECTOR(data_size-1 DOWNTO 0)
-      );
-end Instruction_Memory;
+	Port (
+		clk        : in  std_logic;
+		MemRead    : in  std_logic;
+		MemWrite   : in  std_logic;
+		address    : in  std_logic_vector(address_size-1 downto 0);
+		write_data : in  std_logic_vector(data_size-1 downto 0);
+		read_data  : out std_logic_vector(data_size-1 downto 0)
+	);
+end data_memory;
 
-architecture Behavioral of Instruction_Memory is
-	type Bram_type is array(0 to memory_size-1) of std_logic_vector(data_size-1 downto 0);
-	signal Instruction_Rom : Bram_type := (
-            x"00000517",x"00052503",x"00000597",x"ffc5a583",
-            x"004000ef",x"00050663",x"00058463",x"00059663",
-            x"00000513",x"00008067",x"00000397",x"fe03a383",
-            x"00000417",x"fdc42403",x"007571b3",x"0171d193",
-            x"0075f233",x"01725213",x"008572b3",x"0085f333",
-			x"00140413",x"0082e2b3",x"00836333",x"004181b3",
-			x"f8118193",x"0ff00213",x"fa324ce3",x"fa01cae3",
-			x"0102d393",x"01029413",x"01045413",x"01035493",
-			x"01031613",x"01065613",x"029383b3",x"02c40433",
-			x"01039393",x"01045413",x"0083e2b3",x"40000313",
-			x"01531313",x"0062f233",x"00021a63",x"00129293",
-			x"fff18193",x"f601c6e3",x"fe0216e3",x"0082d293",
-			x"40000413",x"00d41413",x"408282b3",x"00657533",
-			x"0065f5b3",x"00b54533",x"01719193",x"00556533",
-			x"00356533",x"00000073",x"00000000",x"00000000",
+architecture Behavioral of data_memory is
+	type ram_type is array(0 to memory_size-1) of std_logic_vector(data_size-1 downto 0);
+	signal data_ram : ram_type := (
+			x"00000042", x"0000006f", x"0000006e", x"0000006a",
+			x"0000006f", x"00000075", x"00000072", x"00000000",
 			x"00000000", x"00000000", x"00000000", x"00000000",
 			x"00000000", x"00000000", x"00000000", x"00000000",
 			x"00000000", x"00000000", x"00000000", x"00000000",
@@ -281,9 +263,33 @@ architecture Behavioral of Instruction_Memory is
 			x"00000000", x"00000000", x"00000000", x"00000000",
 			x"00000000", x"00000000", x"00000000", x"00000000",
 			x"00000000", x"00000000", x"00000000", x"00000000",
-			x"00000000", x"00000000", x"00000000", x"00000000"			
-                                            );
+			x"00000000", x"00000000", x"00000000", x"00000000",
+			x"00000000", x"00000000", x"00000000", x"00000000",
+			x"00000000", x"00000000", x"00000000", x"00000000",
+			x"00000000", x"00000000", x"00000000", x"00000000",
+			x"00000000", x"00000000", x"00000000", x"00000000",
+			x"00000000", x"00000000", x"00000000", x"00000000",
+			x"00000000", x"00000000", x"00000000", x"00000000",
+			x"00000000", x"00000000", x"00000000", x"00000000",
+			x"00000000", x"00000000", x"00000000", x"00000000",
+			x"00000000", x"00000000", x"00000000", x"00000000",
+			x"00000000", x"00000000", x"00000000", x"00000000",
+			x"00000000", x"00000000", x"00000000", x"00000000",
+			x"00000000", x"00000000", x"00000000", x"00000000",
+			x"00000000", x"00000000", x"00000000", x"00000000"
+			);
+
 begin
 
-    Instr_OUT <= Instruction_Rom(to_integer(shift_right(unsigned(PC_in),2)));
+	read_data <= data_ram(to_integer(shift_right(unsigned(address),2)));
+    process(clk)
+    begin
+        if rising_edge(clk) then
+            if ((MemWrite = '1') and (MemRead = '0')) then
+                data_ram(to_integer(shift_right(unsigned(address),2))) <= write_data;
+            end if;
+        end if;
+    end process;
+
+
 end Behavioral;
